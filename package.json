@@ -1,0 +1,35 @@
+{
+  "name": "npa-tool",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": " .\\node_modules\\.bin\\tsc",
+    "watch": "tsc --watch",
+    "lint": "eslint ./src --ext .ts"
+  },
+  "bin": {
+    "npa-cli": "bin/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trudbot/npa-tool.git"
+  },
+  "author": "trudbot",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/trudbot/npa-tool/issues"
+  },
+  "homepage": "https://github.com/trudbot/npa-tool#readme",
+  "devDependencies": {
+    "@types/node": "^20.4.5",
+    "@typescript-eslint/eslint-plugin": "^6.2.0",
+    "@typescript-eslint/parser": "^6.2.0",
+    "eslint": "^8.45.0",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "commander": "^11.0.0"
+  }
+}
