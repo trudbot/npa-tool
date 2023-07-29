@@ -24,12 +24,16 @@
   "homepage": "https://github.com/trudbot/npa-tool#readme",
   "devDependencies": {
     "@types/node": "^20.4.5",
+    "@types/semver": "^7.5.0",
     "@typescript-eslint/eslint-plugin": "^6.2.0",
     "@typescript-eslint/parser": "^6.2.0",
     "eslint": "^8.45.0",
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "commander": "^11.0.0"
+    "chalk": "^4.1.2",
+    "commander": "^11.0.0",
+    "glob": "^10.3.3",
+    "semver": "^7.5.4"
   }
 }
