@@ -1,3 +1,4 @@
+# NPM Package Analysis Tool [![](https://img.shields.io/badge/npm-v1.0.0-red.svg)](https://www.npmjs.com/package/npa-tool)
 ## About The Project
 
 [//]: # ([![Product Name Screen Shot][product-screenshot]]&#40;https://example.com&#41;)
@@ -8,7 +9,7 @@
 - 是否存在循环依赖；
 - 等等。
 
-因此产生了这个CLI工具， 能从项目的package.json出发， 得到项目的所有包依赖关系， 并可视化展现。
+**npa-tool**是一个开源的命令行界面交互工具， 能从项目的package.json出发， 得到项目的所有包依赖关系， 并可视化展现。
 
 ## Installation
 ```shell
@@ -24,7 +25,7 @@ npm install -g npa-tool
  选项:
   --help: 帮助信息
   --depth: 限制递归分析的深度
-  --json: 不再打开网页， 而是将依赖关系保存到指定的json文件
+  --json: 不再打开网页可视化结果， 而是将依赖关系保存到指定的json文件
 ```
 示例
 ```shell
