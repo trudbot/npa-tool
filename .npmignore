@@ -1,0 +1,16 @@
+tsconfig.json
+.env
+.npmrc
+.gitignore
+.eslintrc
+.prettierrc
+.babelrc
+.vscode/
+.idea/
+.git/
+
+
+*.js.map
+
+node_modules/
+src/
