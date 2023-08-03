@@ -1,0 +1,48 @@
+{
+  "name": "npa-tool",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cli": "node bin/index"
+  },
+  "bin": {
+    "npa-cli": "bin/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trudbot/npa-tool.git"
+  },
+  "keywords": [
+    "cli"
+  ],
+  "author": "trudbot",
+  "contributors": [
+    {
+      "name": "trudbot",
+      "url": "https://github.com/trudbot"
+    },
+    {
+      "name": "Sliverfox-pudding",
+      "url": "https://github.com/Sliverfox-pudding"
+    },
+    {
+      "name": "申小兮",
+      "url": "https://github.com/sxxhlxxdb"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/trudbot/npa-tool/issues"
+  },
+  "homepage": "https://github.com/trudbot/npa-tool#readme",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.0.0",
+    "express": "^4.18.2",
+    "figlet": "^1.6.0",
+    "glob": "^10.3.3",
+    "semver": "^7.5.4"
+  }
+}
