@@ -28,7 +28,16 @@ npm install
 ```shell
 npm run build:cli
 ```
-
+### dev
+启动前端调试
+```shell
+npm run dev
+```
+### build:ui
+前端打包
+```shell
+npm run build:ui
+```
 ### npx npa-tool analyze
 
 执行cli中的命令， 由于是局部安装， 需要加`npx`
