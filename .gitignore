@@ -130,9 +130,12 @@ dist
 
 # IDEA
 .idea
-
+packages/cli/.idea
+packages/ui/.idea
 # vscode
 .vscode
+packages/cli/.vscode
+packages/ui/.vscode
 
 # cli build
 packages/cli/dist
