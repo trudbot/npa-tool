@@ -2,7 +2,6 @@
   "name": "npa-tool",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "cli": "node bin/index"
@@ -44,5 +43,12 @@
     "figlet": "^1.6.0",
     "glob": "^10.3.3",
     "semver": "^7.5.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.6",
+    "@types/express": "^4.17.17",
+    "@types/figlet": "^1.5.6",
+    "@types/node": "^20.4.6",
+    "@types/semver": "^7.5.0"
   }
 }

@@ -7,21 +7,19 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:cli": "npx tsc -p packages/cli",
-    "lint:cli": "eslint packages/cli/src --ext .ts"
+    "lint:cli": "eslint packages/cli/src --ext .ts",
+    "dev": "npm run -C packages/ui dev",
+    "build:ui": "npm run -C packages/ui build",
+    "lint:ui": "eslint packages/ui/src"
   },
   "workspaces": [
     "packages/*"
   ],
   "devDependencies": {
-    "@types/express": "^4.17.17",
-    "@types/figlet": "^1.5.6",
-    "@types/node": "^20.4.6",
-    "@types/semver": "^7.5.0",
     "@typescript-eslint/eslint-plugin": "^6.2.1",
     "@typescript-eslint/parser": "^6.2.1",
     "@vitejs/plugin-vue": "^4.2.3",
     "eslint": "^8.46.0",
-    "eslint-plugin-vue": "^9.16.1",
-    "typescript": "^5.1.6"
+    "eslint-plugin-vue": "^9.16.1"
   }
 }
