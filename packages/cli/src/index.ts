@@ -6,17 +6,23 @@ import {PackageAnalyzer} from './packageAnalyzer'
 import {Config} from "./classes/Config";
 import {parseConfig} from "./untils/configParser";
 import {readPackageJson} from "./untils/readPackageJson";
+import fs from "fs";
 
 function execute(config: Config) {
     console.time("读取时间")
-    readPackageJson(config.root)
+    const packages = readPackageJson(config.root)
     console.timeEnd("读取时间");
-    // // const packages = readPackageJson(config.root);
-    // // const analyzer = new PackageAnalyzer(packages, config.depthLimit);
-    // // const graph = analyzer.buildDependencyGraph();
-    // // const data=  graph.exportDependencies();
-    // // console.log(graph.availableIndex)
-    createMyServer(config);
+    console.log(Object.getOwnPropertyNames(packages).length)
+    console.time("建图时间")
+    const analyzer = new PackageAnalyzer(packages, config.depthLimit);
+    const graph = analyzer.buildDependencyGraph();
+    console.timeEnd("建图时间")
+    fs.writeFile('./data.json', JSON.stringify(graph.export()), (err) => {
+        console.log(err);
+    })
+    // const data=  graph.exportDependencies();
+    // console.log(graph.availableIndex)
+    // createMyServer(config);
 }
 
 function createProgram(): Command {

@@ -10,7 +10,7 @@ function parseConfig(root: string, options: { json: string, depth: string }): Co
         root: '',
         saveJson: false,
         jsonPath: '',
-        depthLimit: 1000000
+        depthLimit: -1
     };
 
     if (root) {

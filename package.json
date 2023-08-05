@@ -2,19 +2,21 @@
   "name": "@npa-tool/root",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:cli": "npx tsc -p packages/cli",
     "lint:cli": "eslint packages/cli/src --ext .ts",
-    "dev": "npm run -C packages/ui dev",
-    "build:ui": "npm run -C packages/ui build",
+    "dev": "npm run -w npa-ui dev",
+    "build:ui": "npm run -w npa-ui build",
     "lint:ui": "eslint packages/ui/src"
   },
   "workspaces": [
     "packages/*"
   ],
+  "engines": {
+    "npm": ">=7.24.2"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.2.1",
     "@typescript-eslint/parser": "^6.2.1",

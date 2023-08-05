@@ -9,7 +9,6 @@ export function readPackageJson(root: string) {
         // 如果项目中存在package-lock.json时， 可以直接由其得到所有包的信息(
         fs.accessSync(path.join(root, 'package-lock.json'), fs.constants.F_OK);
         packagePathList = Object.getOwnPropertyNames(require(path.join(root, 'package-lock.json')).packages);
-
     } catch (err) {
         // 不存在package-lock.json时， 遍历读取node_modules
         packagePathList = globSync(
@@ -24,10 +23,30 @@ export function readPackageJson(root: string) {
     const packages: {
         [packagePath: string]: PackageJson
     } = {};
-    const project = require(path.join(root, 'package.json'));
-    packages[project.name] = project;
+    packages[''] = require(path.join(root, 'package.json'));
+
+    // 根目录Monorepo解析
+    if (packages[''].workspaces !== undefined) {
+        for (let pattern of packages[''].workspaces) {
+            for (let pth of globSync(pattern, {cwd: root})) {
+                const packageJson: PackageJson = require(path.join(root, pth, 'package.json'));
+                if (packages[''].dependencies === undefined) {
+                    packages[''].dependencies = {};
+                }
+                packages[''].dependencies[packageJson.name] = packageJson.version;
+            }
+        }
+    }
+
     for (let packagePath of packagePathList) {
-        packages[packagePath] = require(path.join(root, packagePath, 'package.json'));
+        if (packagePath.length !== 0 && packagePath.startsWith("node_modules")) {
+            try {
+                const packageJson: PackageJson = require(path.join(root, packagePath, 'package.json'));
+                packages[packagePath] = packageJson;
+            } catch (e) {
+            }
+            // packages[packagePath] = require(path.join(root, packagePath, 'package.json'));
+        }
     }
     return packages;
 }
