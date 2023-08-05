@@ -131,5 +131,8 @@ dist
 # IDEA
 .idea
 
+# vscode
+.vscode
+
 # cli build
 packages/cli/dist
