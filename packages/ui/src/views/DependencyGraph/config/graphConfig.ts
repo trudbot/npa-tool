@@ -33,7 +33,10 @@ const defaultG6Graph: GraphOptions = {
         nodeStrength: 1500,
         nodeSpacing: 20,
         animate: true,
-        maxSpeed: 2000
+        maxSpeed: 2000,
+        preset: {
+            type: "circular"
+        }
     },
     modes: {
         default: ['drag-canvas', 'zoom-canvas', 'drag-node', 'activate-relations']

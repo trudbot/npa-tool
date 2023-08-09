@@ -16,7 +16,6 @@ const emit = defineEmits<{
   nodeClick: [id: number]
 }>();
 
-
 onMounted( () => {
   const graph = new G6.Graph(defaultG6Graph);
   // // AI预测图最适合的布局
@@ -36,6 +35,27 @@ onMounted( () => {
   })
 
   graph.render();
+
+  function refreshDragedNodePosition(e) {
+    const model = e.item.get('model');
+    model.fx = e.x;
+    model.fy = e.y;
+  }
+
+  graph.on('node:dragstart', (e) => {
+    // 拖动节点时重新布局
+    graph.layout();
+    refreshDragedNodePosition(e);
+  });
+
+  graph.on('node:drag', (e) => {
+    refreshDragedNodePosition(e);
+  });
+
+  graph.on('node:dragend', (e) => {
+    e.item.get('model').fx = null;
+    e.item.get('model').fy = null;
+  });
 })
 </script>
 
