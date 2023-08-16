@@ -36,6 +36,9 @@ const data = ref({
   })
 });
 
+data.value.nodes[0].fx = 0
+data.value.nodes[0].fy = 0
+
 // function foo() {
 //   data.value = {
 //     nodes: [
