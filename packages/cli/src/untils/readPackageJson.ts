@@ -2,8 +2,10 @@ import {globSync} from "glob";
 import {PackageJson} from "../classes/PackageJson";
 import path from "path";
 import fs from "fs";
+import {success} from "./Message";
 
 export function readPackageJson(root: string) {
+    const start = process.hrtime();
     let packagePathList: string[];
     try {
         // 如果项目中存在package-lock.json时， 可以直接由其得到所有包的信息(
@@ -24,19 +26,7 @@ export function readPackageJson(root: string) {
         [packagePath: string]: PackageJson
     } = {};
     packages[''] = require(path.join(root, 'package.json'));
-
-    // 根目录Monorepo解析
-    if (packages[''].workspaces !== undefined) {
-        for (let pattern of packages[''].workspaces) {
-            for (let pth of globSync(pattern, {cwd: root})) {
-                const packageJson: PackageJson = require(path.join(root, pth, 'package.json'));
-                if (packages[''].dependencies === undefined) {
-                    packages[''].dependencies = {};
-                }
-                packages[''].dependencies[packageJson.name] = packageJson.version;
-            }
-        }
-    }
+    packages[''].dev = true;
 
     for (let packagePath of packagePathList) {
         if (packagePath.length !== 0 && packagePath.startsWith("node_modules")) {
@@ -46,6 +36,22 @@ export function readPackageJson(root: string) {
             } catch (e) {
             }
             // packages[packagePath] = require(path.join(root, packagePath, 'package.json'));
+        }
+    }
+
+    // 根目录Monorepo解析
+    // monorepo的子项目也都是处于开发环境
+    if (packages[''].workspaces !== undefined) {
+        for (let pattern of packages[''].workspaces) {
+            for (let pth of globSync(pattern, {cwd: root})) {
+                const packageJson: PackageJson = require(path.join(root, pth, 'package.json'));
+                if (packages[''].dependencies === undefined) {
+                    packages[''].dependencies = {};
+                }
+                packages[''].dependencies[packageJson.name] = packageJson.version;
+                console.log(path.posix.join("node_modules", packageJson.name))
+                packages[path.posix.join("node_modules", packageJson.name)].dev = true;
+            }
         }
     }
     return packages;

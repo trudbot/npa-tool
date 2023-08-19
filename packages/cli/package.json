@@ -16,9 +16,9 @@
   "keywords": [
     "cli",
     "npm",
-    "Package analysis",
-    "Visualization",
-    "AntV"
+    "package analysis",
+    "visualization",
+    "antv"
   ],
   "author": "trudbot",
   "contributors": [
@@ -47,6 +47,7 @@
     "express": "^4.18.2",
     "figlet": "^1.6.0",
     "glob": "^10.3.3",
+    "hirestime": "^7.0.3",
     "semver": "^7.5.4"
   },
   "devDependencies": {
@@ -55,5 +56,8 @@
     "@types/node": "^20.4.6",
     "@types/semver": "^7.5.0",
     "typescript": "^5.1.6"
+  },
+  "engines": {
+    "node": ">=16"
   }
 }

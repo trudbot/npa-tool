@@ -5,9 +5,13 @@ function error(program: Command, msg: string) {
     program.error(chalk.red("ERROR   ") + msg);
 }
 
-function warning(program: Command, msg: string) {
+function warning(msg: string) {
     console.log(chalk.yellow("WARNING   ") + msg);
 }
 
+function success(msg: string) {
+    console.log(chalk.green("INFO   ") + msg);
+}
 
-export {error, warning}
+
+export {error, warning, success}

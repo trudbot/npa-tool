@@ -9,13 +9,16 @@ interface PackageJson {
     peerDependencies?: DependenciesMap;
     optionalDependencies?: DependenciesMap;
     bundledDependencies?: string[];
-    depth?: number
+    depth?: number;
+    dev?: boolean;
 }
 
 interface PackageInfo {
-    name: string,
-    version: string,
+    name: string;
+    version: string;
     path: string;
+    depth: number;
+    id: number;
 }
 
 export {PackageJson, DependenciesMap, PackageInfo}

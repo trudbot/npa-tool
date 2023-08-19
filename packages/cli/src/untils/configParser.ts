@@ -27,7 +27,11 @@ function parseConfig(root: string, options: { json: string, depth: string }): Co
 
     if (options.json) {
         validateJsonOption(options.json);
-        config.jsonPath = path.resolve(options.json);
+        if (path.isAbsolute(options.json)) {
+            config.jsonPath = options.json;
+        } else {
+            config.jsonPath = path.join(path.resolve('./'), options.json);
+        }
         config.saveJson = true;
     }
 
