@@ -33,16 +33,6 @@ class Graph<E> {
 
     // 这一层导出边集以及 索引->包的关系
     exportEdges() {
-        console.log(this.edges.length);
-        for (let es of this.edges) {
-            for (let i = 0; i < es.length; i ++) {
-                for (let j = i + 1; j < es.length; j ++) {
-                    if (es[i].from === es[j].from && es[i].to === es[j].to) {
-                        console.log("重复", es[i]);
-                    }
-                }
-            }
-        }
         return this.edges.reduce((res, e) => res.concat(e), [])
     }
 

@@ -1,28 +1,37 @@
-import path from "path";
 import {Command} from "commander";
-import {error, warning} from "./untils/Message";
+import {error, success, warning} from "./untils/Message";
 import {createMyServer} from "./server";
 import {PackageAnalyzer} from './packageAnalyzer'
-import {Config} from "./classes/Config";
+import {Config} from "./types/Config";
 import {parseConfig} from "./untils/configParser";
 import {readPackageJson} from "./untils/readPackageJson";
+import {saveJsonData} from "./untils/saveJsonData";
+import {measureExecutionTime} from "./untils/measureExecutionTime";
+import {PackageJson} from "./types/PackageJson";
 import fs from "fs";
 
 function execute(config: Config) {
-    console.time("读取时间")
-    const packages = readPackageJson(config.root)
-    console.timeEnd("读取时间");
-    console.log(Object.getOwnPropertyNames(packages).length)
-    console.time("建图时间")
-    const analyzer = new PackageAnalyzer(packages, config.depthLimit);
-    const graph = analyzer.buildDependencyGraph();
-    console.timeEnd("建图时间")
-    fs.writeFile('./data.json', JSON.stringify(graph.export()), (err) => {
-        console.log(err);
-    })
-    // const data=  graph.exportDependencies();
-    // console.log(graph.availableIndex)
-    // createMyServer(config);
+    let packages!: { [packagePath: string]: PackageJson};
+    let analyzer!: PackageAnalyzer;
+    if (config.depthLimit === -1) {
+        warning("最大递归深度未设置， 将生成项目的所有的包依赖关系")
+    }
+    measureExecutionTime(() => {
+        packages = readPackageJson(config.root)
+    }, time => success(`读取package.json完成, 共用时${time} ms`));
+    measureExecutionTime(() => {
+        analyzer = new PackageAnalyzer(packages, config.depthLimit);
+        analyzer.buildDependencyGraph();
+    }, time => success(`建立依赖图完成, 共用时${time} ms`));
+
+    if (config.saveJson) {
+        measureExecutionTime(() => {
+            saveJsonData(config.jsonPath, analyzer.dependencyGraph.exportToJson());
+        }, time => success(`成功将依赖关系保存到${config.jsonPath}中`));
+    } else {
+        // fs.writeFileSync('./data.json', JSON.stringify(analyzer.getGraphData()));
+        createMyServer(analyzer);
+    }
 }
 
 function createProgram(): Command {

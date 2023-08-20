@@ -1,11 +1,9 @@
 import {globSync} from "glob";
-import {PackageJson} from "../classes/PackageJson";
+import {PackageJson} from "../types/PackageJson";
 import path from "path";
 import fs from "fs";
-import {success} from "./Message";
 
 export function readPackageJson(root: string) {
-    const start = process.hrtime();
     let packagePathList: string[];
     try {
         // 如果项目中存在package-lock.json时， 可以直接由其得到所有包的信息(
@@ -14,6 +12,9 @@ export function readPackageJson(root: string) {
     } catch (err) {
         // 不存在package-lock.json时， 遍历读取node_modules
         packagePathList = globSync(
+            // 匹配包的关键规则
+            // 在当前的npm规则下, 没有问题
+            // 2023.8
             [
                 '**/node_modules/*/package.json',
                 '**/node_modules/@*/*/package.json'
@@ -39,7 +40,7 @@ export function readPackageJson(root: string) {
         }
     }
 
-    // 根目录Monorepo解析
+    // Monorepo(npm workspaces)解析
     // monorepo的子项目也都是处于开发环境
     if (packages[''].workspaces !== undefined) {
         for (let pattern of packages[''].workspaces) {
@@ -49,7 +50,6 @@ export function readPackageJson(root: string) {
                     packages[''].dependencies = {};
                 }
                 packages[''].dependencies[packageJson.name] = packageJson.version;
-                console.log(path.posix.join("node_modules", packageJson.name))
                 packages[path.posix.join("node_modules", packageJson.name)].dev = true;
             }
         }

@@ -1,4 +1,4 @@
-import {Config} from "../classes/Config";
+import {Config} from "../types/Config";
 import {validateDepthOption, validateJsonOption, validateRootPath} from "./paramValidator";
 import path from "path";
 import {warning} from "./Message";

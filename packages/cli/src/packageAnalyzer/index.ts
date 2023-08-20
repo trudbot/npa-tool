@@ -1,6 +1,6 @@
-import {DependenciesMap, PackageJson} from "../classes/PackageJson";
+import {DependenciesMap, PackageJson} from "../types/PackageJson";
 import {DependencyGraph} from "./DependencyGraph";
-import {DependencyType} from "../classes/DependencyType";
+import {DependencyType} from "../types/DependencyType";
 import {satisfies} from "semver";
 import path from "path";
 import {Queue} from "@datastructures-js/queue";
@@ -71,10 +71,6 @@ export class PackageAnalyzer {
     // 这是核心算法
     iteratePackageDependency(pth: string, callback: (usedPackage: string, type: DependencyType) => void): void {
         const nodeModulesDirectories: string[] = this.findNodeModulesDirectories(path.posix.join(pth, "node_modules"));
-        if (pth === "node_modules/npa-tool") {
-            console.log(nodeModulesDirectories)
-            console.log(this.packages[path.posix.join("node_modules", "hirestime")]);
-        }
         // 该不该遍历其它类型的dependencies呢？
         // 尤其是devDependencies， 一般来说npm包的devDependencies不会被安装， 但项目的devDependencies会被安装
         // 如果为每个包都去匹配devDependencies的话， 可能会出现， 大部分包其实并没有安装devDependencies

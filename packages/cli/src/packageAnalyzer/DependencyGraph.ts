@@ -1,7 +1,6 @@
-import {Graph} from "../classes/Graph";
-import {PackageInfo} from "../classes/PackageJson";
-import {DependencyType} from "../classes/DependencyType";
-
+import {Graph} from "./Graph";
+import {DependencyType} from "../types/DependencyType"
+import {PackageInfo} from "../types/PackageJson";
 
 // 这个类主要做的是索引维护， 即包->索引的对应关系， 建图时的工具类
 // 这里使用包的唯一标识: 路径来做key
@@ -10,15 +9,15 @@ class DependencyGraph {
     index: Map<string, number>;
 
     packages: Array<PackageInfo>;
-    availableIndex: number = 0;
 
 
     constructor(packages: Array<PackageInfo>) {
         this.packages = packages;
         this.graph = new Graph<DependencyType>(packages.length);
         this.index = new Map<string, number>();
-        for (let i = 0; i < packages.length; i ++) {
+        for (let i = 0; i < packages.length; i++) {
             this.index.set(packages[i].path, i);
+            packages[i].id = i;
         }
     }
 
@@ -30,28 +29,46 @@ class DependencyGraph {
         }
     }
 
-    export() {
-        const edges = this.graph.exportEdges();
-        const set = new Set<number>();
-        const nodes = [];
-        for (let e of edges) {
-            set.add(e.to).add(e.from);
-        }
-        for (let i of set) {
-            nodes.push({
-                id: i,
-                path: this.packages[i].path
-            })
-        }
-        return {
-            edges: edges,
-            nodes: nodes
+    setPackageDepth(pth: string, depth: number): void {
+        if (this.index.has(pth)) {
+            this.packages[this.index.get(pth) as number].depth = depth;
         }
     }
 
+    exportEdges() {
+        return this.graph.exportEdges()
+    }
+
     exportPackages() {
+        return this.packages.filter((e) => e.depth !== 0);
+    }
+
+    exportToJson() {
+        const res: JsonData = {};
+        const edges = this.graph.edges;
+        for (let i = 0; i < this.packages.length; i++) {
+            res[this.packages[i].path] = {
+                name: this.packages[i].name,
+                version: this.packages[i].version,
+                dependencies: {}
+            }
+            for (let edge of edges[i]) {
+                res[this.packages[i].path].dependencies[this.packages[edge.to].name] = this.packages[edge.to].path;
+            }
+        }
+        return res;
+    }
+
+    // 单独查看某个包的依赖
+    getSpecifiedPackageDependencies(id: number, depthLimit: number) {
+        const {nodes, edges} = this.graph.subGraph(id, depthLimit);
         return {
-            data: this.packages
+            nodes: nodes.map((e) => {
+                const info: PackageInfo = {...this.packages[e.id]};
+                info.depth = e.depth;
+                return info;
+            }),
+            edges: edges
         }
     }
 }
