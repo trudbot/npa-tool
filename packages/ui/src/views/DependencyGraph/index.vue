@@ -13,6 +13,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   nodeClick: [id: number];
+  nodeDBClick: [id: number];
 }>();
 
 const colors = [
@@ -80,8 +81,6 @@ function change(data:any) {
 
 onMounted(() => {
   const graph = new G6.Graph(defaultG6Graph);
-  // graph.data(getOriginalObjectOfProxy(props.data));
-  graph.changeSize(props.width, props.height);
 
   // 监听数据变化， 自动重新渲染图
   watch(
@@ -90,7 +89,7 @@ onMounted(() => {
         if (props.data === undefined) {
           return;
         }
-        const newData = getOriginalObjectOfProxy(props.data);
+        let newData = getOriginalObjectOfProxy(props.data);
         // 自定义节点/边
         change(newData);
         graph.changeData(newData);
@@ -98,9 +97,29 @@ onMounted(() => {
       {immediate: true}
   );
 
+  // 容器大小
+  watch([() => props.height, () => props.width], () => {
+    graph.changeSize(props.width, props.height);
+  },{immediate: true});
+
+
   // 顶点点击事件
   graph.on("node:click", (e) => {
     emit("nodeClick", parseInt((e.item as Item).getID()));
+  });
+
+  // 顶点双击
+  graph.on("node:dblclick", (e) => {
+    emit("nodeDBClick", parseInt((e.item as Item).getID()));
+  })
+
+  // 大大大大坑
+  // 上述代码changeData后， 会重新进行布局
+  // 重新进行布局后， 需要重新调用fitView调整缩放
+  // 而布局是异步的， 所以必须等布局结束后进行fitView
+  // 参考: https://github.com/antvis/G6/issues/4238
+  graph.on('afterlayout', () => {
+    graph.fitView()
   });
 
   graph.render();
