@@ -41,52 +41,62 @@ const strokes = [
     "#FF99C3",
 ];
 
-// 自定义节点
-const nodes = props.data.nodes;
-const depthMap = new Map();
-let depthId = 0;
-nodes.forEach((element) => {
-    // cluster
-    if (element.cluster && depthMap.get(element.cluster) === undefined) {
-        depthMap.set(element.cluster, depthId);
-        depthId++;
-    }
-    const cid = depthMap.get(element.cluster);
-    if (!element.style) {
-        element.style = {};
-    }
-    element.style.fill = colors[cid % colors.length];
-    element.style.stroke = strokes[cid % strokes.length];
-});
+function change(data:any) {
+    // 自定义节点
+    const nodes = data.nodes;
+    const depthMap = new Map();
+    let depthId = 0;
+    nodes.forEach((element: any) => {
+        // cluster
+        if (element.cluster && depthMap.get(element.cluster) === undefined) {
+            depthMap.set(element.cluster, depthId);
+            depthId++;
+        }
+        const cid = depthMap.get(element.cluster);
+        if (!element.style) {
+            element.style = {};
+        }
+        element.style.fill = colors[cid % colors.length];
+        element.style.stroke = strokes[cid % strokes.length];
+    });
 
-// 自定义边
-const edges = props.data.edges;
-const edgesMap = new Map();
-let edgesId = 0;
-edges.forEach((element) => {
-    if (element.info && edgesMap.get(element.info) === undefined) {
-        edgesMap.set(element.info, edgesId);
-        edgesId++;
-    }
-    const cid = edgesMap.get(element.info);
-    if (!element.style) {
-        element.style = {};
-    }
-    element.color = colors[cid % colors.length];
-});
+    // 自定义边
+    const edges = data.edges;
+    const edgesMap = new Map();
+    let edgesId = 0;
+    edges.forEach((element: any) => {
+        if (element.info && edgesMap.get(element.info) === undefined) {
+            edgesMap.set(element.info, edgesId);
+            edgesId++;
+        }
+        const cid = edgesMap.get(element.info);
+        if (!element.style) {
+            element.style = {};
+        }
+        element.color = colors[cid % colors.length];
+    });
+}
+change(props.data)
+
 
 onMounted(() => {
     const graph = new G6.Graph(defaultG6Graph);
+    console.log(graph);
     // // AI预测图最适合的布局
     // const {predictLayout, confidence} = await GraphLayoutPredict.predict(getOriginalObjectOfProxy(props.data));
     // defaultG6Graph.layout.type = predictLayout;
     graph.data(getOriginalObjectOfProxy(props.data));
+    graph.changeSize(props.width, props.height);
 
     // 监听数据变化， 自动重新渲染图
     watch(
         () => props.data,
         () => {
-            graph.changeData(getOriginalObjectOfProxy(props.data));
+            const newData = getOriginalObjectOfProxy(props.data)
+            // 自定义节点/边
+            change(newData)
+            graph.changeData(newData);
+            graph.render();
         }
     );
 
