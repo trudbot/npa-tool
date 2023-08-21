@@ -8,7 +8,7 @@ import { getOriginalObjectOfProxy } from "../../utils/getOriginalObjectOfProxy.t
 const props = defineProps<{
   height: number;
   width: number;
-  data: GraphData;
+  data: GraphData | undefined;
 }>();
 
 const emit = defineEmits<{
@@ -80,13 +80,16 @@ function change(data:any) {
 
 onMounted(() => {
   const graph = new G6.Graph(defaultG6Graph);
-  graph.data(getOriginalObjectOfProxy(props.data));
+  // graph.data(getOriginalObjectOfProxy(props.data));
   graph.changeSize(props.width, props.height);
 
   // 监听数据变化， 自动重新渲染图
   watch(
       () => props.data,
       () => {
+        if (props.data === undefined) {
+          return;
+        }
         const newData = getOriginalObjectOfProxy(props.data);
         // 自定义节点/边
         change(newData);
