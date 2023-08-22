@@ -14,6 +14,8 @@ const tooltip = new G6.Tooltip({
     const outDiv = document.createElement('div');
     outDiv.style.width = 'fit-content';
     outDiv.style.padding = '0px 20px 10px 0px';
+    if (e === undefined) return outDiv;
+    if (e.item === null) return outDiv;
     if(e.target.get('name') === 'edge-shape'){
       outDiv.innerHTML = `
       <h4 style="margin-left:20px">边信息</h4>
