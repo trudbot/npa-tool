@@ -33,6 +33,18 @@ h1 {
   line-height: 1.1;
 }
 
+ul>li {
+  list-style: none;
+}
+
+h3,h4,h5 {
+  margin: 0 0 5px 10px;
+}
+ul {
+  margin: 0;
+  padding: 0;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
