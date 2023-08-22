@@ -1,13 +1,14 @@
 <template>
     <div id="graph-container">
-        <DependencyGraph :data="data" :width="1920" :height="1080" @nodeClick="foobar"></DependencyGraph>
+        <!-- <DependencyGraph :data="data" :width="1920" :height="1080" @nodeClick="foobar"></DependencyGraph> -->
+        <MdsIndex :data="data" :width="1920" :height="1080" @nodeClick="foobar"></MdsIndex>
         <!-- <button @click="btn">改变</button> -->
     </div>
 </template>
 
 <script setup lang="ts">
-import DependencyGraph from "./views/DependencyGraph/index.vue";
-
+// import DependencyGraph from "./views/DependencyGraph/index.vue";
+import MdsIndex from "./views/DependencyGraph/mdsIndex.vue";
 import { onMounted, ref, shallowRef } from "vue";
 import jsonData from "../public/data.json";
 // import G6 from '@antv/g6';
@@ -19,7 +20,7 @@ const data = shallowRef({
     nodes: nodes.map((e, idx) => {
         return {
             id: idx.toString(),
-            label: e.name + "@" + e.version,
+            // label: e.name + "@" + e.version,
             cluster: e.depth,
             name: e.name,
             version: e.version,

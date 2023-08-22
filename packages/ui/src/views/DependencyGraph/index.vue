@@ -76,7 +76,7 @@ function change(data:any) {
         element.color = colors[cid % colors.length];
     });
 }
-change(props.data)
+// change(props.data)
 
 
 onMounted(() => {
@@ -96,8 +96,9 @@ onMounted(() => {
             // 自定义节点/边
             change(newData)
             graph.changeData(newData);
-            graph.render();
-        }
+            // graph.render();
+        },
+        {immediate:true}
     );
 
     // 顶点点击事件

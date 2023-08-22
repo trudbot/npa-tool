@@ -10,7 +10,7 @@ const tooltip = new G6.Tooltip({
   itemTypes: ['node', 'edge'],
   // custom the tooltip's content
   // 自定义 tooltip 内容
-  getContent: (e) => {
+  getContent: (e:any) => {
     const outDiv = document.createElement('div');
     outDiv.style.width = 'fit-content';
     outDiv.style.padding = '0px 20px 10px 0px';
