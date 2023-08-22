@@ -43,9 +43,6 @@ const tooltip = new G6.Tooltip({
 
 const defaultG6Graph: GraphOptions = {
   container: "graph-container",
-  width: 1920,
-  height: 1080,
-  fitView: true,
   defaultNode: {
     type: 'rect',
     size: [200, 50],

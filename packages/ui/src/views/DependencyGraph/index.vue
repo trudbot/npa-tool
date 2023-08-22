@@ -1,117 +1,134 @@
 <script setup lang="ts">
-import { GraphData } from "@antv/g6";
-import { onMounted, ref, watch, watchEffect } from "vue";
+import {GraphData, Item} from "@antv/g6";
+import { onMounted,watch} from "vue";
 import { defaultG6Graph } from "./config/graphConfig";
-import { GraphLayoutPredict } from "@antv/vis-predict-engine";
 import G6 from "@antv/g6";
 import { getOriginalObjectOfProxy } from "../../utils/getOriginalObjectOfProxy.ts";
 
 const props = defineProps<{
-    height: number;
-    width: number;
-    data: GraphData;
+  height: number;
+  width: number;
+  data: GraphData | undefined;
 }>();
 
 const emit = defineEmits<{
-    nodeClick: [id: number];
+  nodeClick: [id: number];
+  nodeDBClick: [id: number];
 }>();
 
 const colors = [
-    "#BDD2FD",
-    "#BDEFDB",
-    "#C2C8D5",
-    "#FBE5A2",
-    "#F6C3B7",
-    "#B6E3F5",
-    "#D3C6EA",
-    "#FFD8B8",
-    "#AAD8D8",
-    "#FFD6E7",
+  "#BDD2FD",
+  "#BDEFDB",
+  "#C2C8D5",
+  "#FBE5A2",
+  "#F6C3B7",
+  "#B6E3F5",
+  "#D3C6EA",
+  "#FFD8B8",
+  "#AAD8D8",
+  "#FFD6E7",
 ];
 const strokes = [
-    "#5B8FF9",
-    "#5AD8A6",
-    "#5D7092",
-    "#F6BD16",
-    "#E8684A",
-    "#6DC8EC",
-    "#9270CA",
-    "#FF9D4D",
-    "#269A99",
-    "#FF99C3",
+  "#5B8FF9",
+  "#5AD8A6",
+  "#5D7092",
+  "#F6BD16",
+  "#E8684A",
+  "#6DC8EC",
+  "#9270CA",
+  "#FF9D4D",
+  "#269A99",
+  "#FF99C3",
 ];
 
+// 自定义结点和边的样式
 function change(data:any) {
-    // 自定义节点
-    const nodes = data.nodes;
-    const depthMap = new Map();
-    let depthId = 0;
-    nodes.forEach((element: any) => {
-        // cluster
-        if (element.cluster && depthMap.get(element.cluster) === undefined) {
-            depthMap.set(element.cluster, depthId);
-            depthId++;
-        }
-        const cid = depthMap.get(element.cluster);
-        if (!element.style) {
-            element.style = {};
-        }
-        element.style.fill = colors[cid % colors.length];
-        element.style.stroke = strokes[cid % strokes.length];
-    });
+  // 自定义节点
+  const nodes = data.nodes;
+  const depthMap = new Map();
+  let depthId = 0;
+  nodes.forEach((element: any) => {
+    // cluster
+    if (element.cluster && depthMap.get(element.cluster) === undefined) {
+      depthMap.set(element.cluster, depthId);
+      depthId++;
+    }
+    const cid = depthMap.get(element.cluster);
+    if (!element.style) {
+      element.style = {};
+    }
+    element.style.fill = colors[cid % colors.length];
+    element.style.stroke = strokes[cid % strokes.length];
+  });
 
-    // 自定义边
-    const edges = data.edges;
-    const edgesMap = new Map();
-    let edgesId = 0;
-    edges.forEach((element: any) => {
-        if (element.info && edgesMap.get(element.info) === undefined) {
-            edgesMap.set(element.info, edgesId);
-            edgesId++;
-        }
-        const cid = edgesMap.get(element.info);
-        if (!element.style) {
-            element.style = {};
-        }
-        element.color = colors[cid % colors.length];
-    });
+  // 自定义边
+  const edges = data.edges;
+  const edgesMap = new Map();
+  let edgesId = 0;
+  edges.forEach((element: any) => {
+    if (element.info && edgesMap.get(element.info) === undefined) {
+      edgesMap.set(element.info, edgesId);
+      edgesId++;
+    }
+    const cid = edgesMap.get(element.info);
+    if (!element.style) {
+      element.style = {};
+    }
+    element.color = colors[cid % colors.length];
+  });
 }
-// change(props.data)
+change(props.data)
 
 
 onMounted(() => {
-    const graph = new G6.Graph(defaultG6Graph);
-    console.log(graph);
-    // // AI预测图最适合的布局
-    // const {predictLayout, confidence} = await GraphLayoutPredict.predict(getOriginalObjectOfProxy(props.data));
-    // defaultG6Graph.layout.type = predictLayout;
-    graph.data(getOriginalObjectOfProxy(props.data));
+  const graph = new G6.Graph(defaultG6Graph);
+
+  // 监听数据变化， 自动重新渲染图
+  watch(
+      () => props.data,
+      () => {
+        if (props.data === undefined) {
+          return;
+        }
+        let newData = getOriginalObjectOfProxy(props.data);
+        // 自定义节点/边
+        change(newData);
+        graph.changeData(newData);
+      },
+      {immediate: true}
+  );
+
+  // 容器大小
+  watch([() => props.height, () => props.width], () => {
     graph.changeSize(props.width, props.height);
+  },{immediate: true});
 
-    // 监听数据变化， 自动重新渲染图
-    watch(
-        () => props.data,
-        () => {
-            const newData = getOriginalObjectOfProxy(props.data)
-            // 自定义节点/边
-            change(newData)
-            graph.changeData(newData);
-            // graph.render();
-        },
-        {immediate:true}
-    );
 
-    // 顶点点击事件
-    graph.on("node:click", (e) => {
-        emit("nodeClick", e.item.getID());
-    });
+  // 顶点点击事件
+  graph.on("node:click", (e) => {
+    emit("nodeClick", parseInt((e.item as Item).getID()));
+  });
 
-    graph.render();
+  // 顶点双击
+  graph.on("node:dblclick", (e) => {
+    emit("nodeDBClick", parseInt((e.item as Item).getID()));
+  })
+
+  // 大大大大坑
+  // 上述代码changeData后， 会重新进行布局
+  // 重新进行布局后， 需要重新调用fitView调整缩放
+  // 而布局是异步的， 所以必须等布局结束后进行fitView
+  // 参考: https://github.com/antvis/G6/issues/4238
+  graph.on('afterlayout', () => {
+    graph.fitView()
+  });
+
+  graph.render();
 });
 </script>
 
 <template>
-    <div class="graph-container"></div>
+  <div id="graph-container"></div>
 </template>
 
 <style scoped></style>
