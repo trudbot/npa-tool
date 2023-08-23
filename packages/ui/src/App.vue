@@ -3,14 +3,16 @@
         <!-- <DependencyGraph :data="data" :width="1920" :height="1080" @nodeClick="foobar"></DependencyGraph> -->
         <MdsIndex :data="data" :width="1920" :height="1080" @nodeClick="foobar"></MdsIndex>
         <!-- <button @click="btn">改变</button> -->
+        <NodeInfoSideBar />
     </div>
 </template>
 
 <script setup lang="ts">
 // import DependencyGraph from "./views/DependencyGraph/index.vue";
-import MdsIndex from "./views/DependencyGraph/mdsIndex.vue";
+import MdsIndex from "./views/DependencyGraph/index.vue";
 import { onMounted, ref, shallowRef } from "vue";
 import jsonData from "../public/data.json";
+import NodeInfoSideBar from './views/NodeInfoSideBar/NodeInfoSideBar.vue'
 // import G6 from '@antv/g6';
 
 const edges = jsonData.edges;
@@ -109,4 +111,6 @@ onMounted(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+    
+</style>
