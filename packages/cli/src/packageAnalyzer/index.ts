@@ -173,4 +173,5 @@ export class PackageAnalyzer {
             edges: this.dependencyGraph.exportEdges()
         }
     }
+
 }

@@ -88,10 +88,10 @@ onMounted(() => {
         if (props.data === undefined) {
           return;
         }
-        console.time("布局用时")
         let newData = getOriginalObjectOfProxy(props.data);
         // 自定义节点/边
         change(newData);
+
         graph.changeData(newData);
       },
       {immediate: true}
@@ -120,7 +120,6 @@ onMounted(() => {
   // 参考: https://github.com/antvis/G6/issues/4238
   graph.on('afterlayout', () => {
     graph.fitView()
-    console.timeEnd("布局用时")
   });
 
   graph.render();

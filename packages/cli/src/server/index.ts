@@ -20,19 +20,19 @@ export function createMyServer(analyzer: PackageAnalyzer) {
 
     app.use(express.static(path.join(__dirname, '../../html')));
 
-    app.get('/nodes', (req: express.Request, res: express.Response) => {
+    app.get('/api/nodes', (req: express.Request, res: express.Response) => {
         res.json(analyzer.dependencyGraph.exportPackages());
     });
 
-    app.get('/edges', (req: express.Request, res: express.Response) => {
+    app.get('/api/edges', (req: express.Request, res: express.Response) => {
         res.json(analyzer.dependencyGraph.exportEdges());
     });
 
-    app.get('/data', (req, res) => {
+    app.get('/api/data', (req, res) => {
         res.json(analyzer.getGraphData());
     })
 
-    app.get('/packageJson', (req, res) => {
+    app.get('/api/packageJson', (req, res) => {
         if (req.query.id === undefined) {
             res.status(400).send('Invalid parameters');
         }
@@ -47,7 +47,7 @@ export function createMyServer(analyzer: PackageAnalyzer) {
         }
     });
 
-    app.get('/dependencies', (req, res) => {
+    app.get('/api/dependencies', (req, res) => {
         const packageId = parseInt(req.query.id as string);
         const depth = parseInt(req.query.depth as string);
         if (isNaN(packageId) || isNaN(depth)) {
@@ -57,6 +57,20 @@ export function createMyServer(analyzer: PackageAnalyzer) {
 
         try {
             res.json(analyzer.dependencyGraph.getSpecifiedPackageDependencies(packageId, depth));
+        } catch (e) {
+            console.log(e)
+            res.status(500).send("Error")
+        }
+    })
+
+    app.get('/api/directDependencyList', (req, res) => {
+        const packageId = parseInt(req.query.id as string);
+        if (isNaN(packageId)) {
+            res.status(400).send('Invalid parameters');
+            return;
+        }
+        try {
+            res.json(analyzer.dependencyGraph.getDirectDependency(packageId));
         } catch (e) {
             console.log(e)
             res.status(500).send("Error")

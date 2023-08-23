@@ -71,6 +71,15 @@ class DependencyGraph {
             edges: edges
         }
     }
+
+    // 获得某个包的直接依赖
+    getDirectDependency(id: number) {
+        return {
+            list: this.graph.edges[id].map(e => {
+                return this.packages[e.to];
+            })
+        }
+    }
 }
 
 export {DependencyGraph}

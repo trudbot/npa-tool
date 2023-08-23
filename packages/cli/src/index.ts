@@ -8,7 +8,6 @@ import {readPackageJson} from "./untils/readPackageJson";
 import {saveJsonData} from "./untils/saveJsonData";
 import {measureExecutionTime} from "./untils/measureExecutionTime";
 import {PackageJson} from "./types/PackageJson";
-import fs from "fs";
 
 function execute(config: Config) {
     let packages!: { [packagePath: string]: PackageJson};
@@ -19,6 +18,7 @@ function execute(config: Config) {
     measureExecutionTime(() => {
         packages = readPackageJson(config.root)
     }, time => success(`读取package.json完成, 共用时${time} ms`));
+
     measureExecutionTime(() => {
         analyzer = new PackageAnalyzer(packages, config.depthLimit);
         analyzer.buildDependencyGraph();
@@ -29,7 +29,6 @@ function execute(config: Config) {
             saveJsonData(config.jsonPath, analyzer.dependencyGraph.exportToJson());
         }, time => success(`成功将依赖关系保存到${config.jsonPath}中`));
     } else {
-        // fs.writeFileSync('./data.json', JSON.stringify(analyzer.getGraphData()));
         createMyServer(analyzer);
     }
 }

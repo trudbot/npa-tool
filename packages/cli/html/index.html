@@ -1,26 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>JSON Data Display</title>
-</head>
-<body>
-<h1>JSON Data Display</h1>
-<div id="data-container">
-  <!-- JSON数据将在这里展示 -->
-</div>
-
-<script>
-  // 使用Fetch API获取JSON数据
-  fetch('/data')
-          .then(response => response.json())
-          .then(data => {
-            // 将获取到的JSON数据显示在页面上
-            const dataContainer = document.getElementById('data-container');
-            dataContainer.innerHTML = JSON.stringify(data, null, 2);
-          })
-          .catch(error => {
-            console.error('Error fetching data:', error);
-          });
-</script>
-</body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + Vue + TS</title>
+    <script type="module" crossorigin src="/assets/index-f10c56d6.js"></script>
+    <link rel="stylesheet" href="/assets/index-92b16866.css">
+  </head>
+  <body>
+    <div id="app"></div>
+    
+  </body>
 </html>
