@@ -1,14 +1,17 @@
 <script setup lang="ts">
-import {ref} from 'vue'
-import GraphModule from './GraphModule.vue';
+import {ref, onMounted} from 'vue'
+import GraphModule from './GraphModule.vue'
+// import { useSelectedPackageData } from '../../../stores/selectedPackageData.ts'
 
-const name = ref('packageXxxxxxx');
+const name = ref('packageXxxxxxx')
 const version = ref('@1.1.1');
 const path = ref('./xxx.x/xxxx')
 const description = ref('some description of the bundle')
 const moduleHref = ref('https://github.com/')
 const dependenciesArr = ref(['xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx'
                             ,'xxx','xxx','xxx','xxx','xxx','xxx','xxx'])
+
+// const nodeInfo  = ref()
 
 const colors = ref([
   "#BDD2FD",
@@ -22,6 +25,11 @@ const colors = ref([
   "#AAD8D8",
   "#FFD6E7",
 ])
+
+// onMounted(()=>{
+//     const {packageData, dependencyList, setSelected} = useSelectedPackageData()
+//     nodeInfo.value = packageData.value
+// })
 
 function showDependencies(){
     //展示依赖

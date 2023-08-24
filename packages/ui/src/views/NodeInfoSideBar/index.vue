@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {Search} from '@element-plus/icons-vue'
-import {ref} from 'vue'
+import {ref ,onMounted} from 'vue'
 import animate from '../../utils/animate'
 import NodeModule from "./components/NodeModule.vue";
 import NodeGraph from "./components/NodeGraph.vue";
@@ -16,12 +16,12 @@ const router = useRouter();
 
 function hideSideBar() {
   if (hide.value === false) {
-    animate(sideBarRef.value, 1675, () => {
+    animate(sideBarRef.value, 1693, () => {
       hideRef.value.innerHTML = '<'
     });
 
   } else {
-    animate(sideBarRef.value, 1302, () => {
+    animate(sideBarRef.value, 1322, () => {
       hideRef.value.innerHTML = '>'
     });
   }
