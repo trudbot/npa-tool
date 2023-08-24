@@ -18,7 +18,7 @@ const props = defineProps<{
 // 查看某个包的依赖
 function viewPackageDependencies(id: number, depth: number) {
     router.push({
-        name: "Dependencies",
+        name: "Graph",
         params: {
             id: id,
             depth: depth

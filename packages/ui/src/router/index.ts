@@ -8,7 +8,7 @@ export default createRouter({
             path: "/",
             // component: () => import('../views/HomePage/index.vue'),
             redirect: {
-                name: "Dependencies",
+                name: "Graph",
                 params: {
                     id: 0,
                     depth: -1
@@ -21,12 +21,6 @@ export default createRouter({
             component: () => import('../views/HomePage/index.vue'),
             props: true,
             children: [
-                {
-                    path: "",
-                    redirect: {
-                        name: "Module"
-                    }
-                },
                 {
                     path: "module",
                     component: NodeModule,

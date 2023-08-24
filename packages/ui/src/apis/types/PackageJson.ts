@@ -4,6 +4,7 @@ interface PackageJson {
     name: string;
     version: string;
     description?: string;
+    homepage?: string;
     workspaces?: string[];
     dependencies?: DependenciesMap;
     devDependencies?: DependenciesMap;
@@ -22,5 +23,10 @@ interface PackageInfo {
     id: number;
 }
 
-export type {PackageJson, DependenciesMap, PackageInfo}
+interface PackageData {
+    path: string,
+    packageJson: PackageJson
+}
+
+export type {PackageJson, DependenciesMap, PackageInfo, PackageData}
 

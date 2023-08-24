@@ -37,5 +37,15 @@ export const useDependencyData = defineStore('dependencies', () => {
         }
     });
 
-    return {data, graphData, setArgs};
+    const packagesList = computed(() => {
+        if (data.value === undefined) {
+            return [];
+        }
+        return data.value.nodes.map(e => {
+            return e.name + "@" + e.version;
+        })
+    })
+
+
+    return {data, graphData, setArgs, packagesList};
 })

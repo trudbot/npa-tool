@@ -1,7 +1,7 @@
 import request from "../utils/request";
 import {AxiosResponse} from "axios";
 import {GraphData} from "./types/GraphData.ts";
-import {PackageJson} from "./types/PackageJson.ts";
+import {PackageData, PackageJson} from "./types/PackageJson.ts";
 import {DirectDependencyList} from "./types/DirectDependencyList.ts";
 
 // 获得从项目根开始的、所有的包的依赖关系
@@ -21,10 +21,10 @@ export function getPackageDependencies(query: {id: number, depth: number}): Prom
     });
 }
 
-// 获得某个包的package.json信息
-export function getPackageJson(query: {id: number}): Promise<AxiosResponse<PackageJson>> {
+// 获得某个包的路径和package.json
+export function getPackageData(query: {id: number}): Promise<AxiosResponse<PackageData>> {
     return request({
-        url: "/api/packageJson",
+        url: "/api/packageData",
         method: "get",
         params: query
     })

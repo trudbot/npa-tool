@@ -30,9 +30,9 @@ export function createMyServer(analyzer: PackageAnalyzer) {
 
     app.get('/api/data', (req, res) => {
         res.json(analyzer.getGraphData());
-    })
+    });
 
-    app.get('/api/packageJson', (req, res) => {
+    app.get('/api/packageData', (req, res) => {
         if (req.query.id === undefined) {
             res.status(400).send('Invalid parameters');
         }
@@ -40,7 +40,11 @@ export function createMyServer(analyzer: PackageAnalyzer) {
         try {
             const pth = analyzer.dependencyGraph.packages[id].path;
             const packageJson = analyzer.packages[pth];
-            res.json(analyzer.packages[pth]);
+            const packageData = {
+                path: pth,
+                packageJson: packageJson
+            }
+            res.json(packageData);
         } catch (e) {
             console.log(e);
             res.status(500).send("Error");
