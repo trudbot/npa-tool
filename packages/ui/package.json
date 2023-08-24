@@ -11,6 +11,7 @@
   "dependencies": {
     "@antv/g6": "^4.8.21",
     "@antv/vis-predict-engine": "^0.1.1",
+    "@element-plus/icons-vue": "^2.1.0",
     "axios": "^1.4.0",
     "element-plus": "^2.3.9",
     "pinia": "^2.1.6",

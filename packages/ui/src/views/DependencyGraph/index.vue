@@ -100,7 +100,7 @@ onMounted(() => {
   // 容器大小
   watch([() => props.height, () => props.width], async () => {
     await graph.changeSize(props.width, props.height);
-    graph.fitView();
+    await graph.fitView();
   },{immediate: true});
 
 
