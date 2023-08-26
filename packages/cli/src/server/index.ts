@@ -60,7 +60,7 @@ export function createMyServer(analyzer: PackageAnalyzer) {
         }
 
         try {
-            res.json(analyzer.dependencyGraph.getSpecifiedPackageDependencies(packageId, depth));
+            res.json(analyzer.getPackageDependencies(packageId, depth));
         } catch (e) {
             console.log(e)
             res.status(500).send("Error")
@@ -75,6 +75,20 @@ export function createMyServer(analyzer: PackageAnalyzer) {
         }
         try {
             res.json(analyzer.dependencyGraph.getDirectDependency(packageId));
+        } catch (e) {
+            console.log(e)
+            res.status(500).send("Error")
+        }
+    });
+
+    app.get('/api/whyInstalled', (req, res) => {
+        const packageId = parseInt(req.query.id as string);
+        if (isNaN(packageId)) {
+            res.status(400).send('Invalid parameters');
+            return;
+        }
+        try {
+            res.json(analyzer.whyInstalledIt(packageId));
         } catch (e) {
             console.log(e)
             res.status(500).send("Error")

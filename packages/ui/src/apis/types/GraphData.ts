@@ -8,7 +8,10 @@ interface Edge {
 }
 interface GraphData {
     nodes: PackageInfo[],
-    edges: Edge[]
+    edges: Edge[],
+    licenses: {
+        [name: string]: number
+    }
 }
 
 export type {Edge, GraphData}

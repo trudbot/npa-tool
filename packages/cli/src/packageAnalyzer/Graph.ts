@@ -40,33 +40,21 @@ class Graph<E> {
     // 即找出某个顶点的所有直接、间接前驱
     // 在构建图时， 保存了每条边的反向(相当于建了一个无向图)， 所以使得这部分异常容易
     findPredecessors(id: number) {
-        let res: Edge<E>[] = [];
-        const st: boolean[] = new Array(this.edges.length).fill(false);
-        const edges = this.invEdges;
-
-        function dfs(u: number) {
-            st[u] = true;
-            for (let edge of edges[u]) {
-                if (!st[edge.to]) {
-                    dfs(edge.to);
-                }
-                res.push({
-                    from: edge.to,
-                    to: edge.from,
-                    info: edge.info
-                })
-            }
-        }
-
-        dfs(id);
+        const res = this.subGraph(id, -1, true);
+        res.edges.forEach(e => {
+            const temp = e.to;
+            e.to = e.from;
+            e.from = temp;
+        })
         return res;
     }
 
     // 获得指定深度的子图
-    subGraph(root: number, depthLimit: number) {
+    subGraph(root: number, depthLimit: number, inv?: boolean) {
         const depth = Array.from({length: this.edges.length}, () => 0);
         let resultEdges: Array<Edge<E>> = [];
         let resultNodes: {id: number; depth: number}[] = [];
+        const edgesSource: Array<Array<Edge<E>>> = (inv === true ? this.invEdges : this.edges);
         const queue = new Queue<number>();
         queue.push(root);
         depth[root] = 1;
@@ -80,8 +68,8 @@ class Graph<E> {
             if (depth[front] === depthLimit) {
                 continue;
             }
-            resultEdges = resultEdges.concat(this.edges[front]);
-            for (let e of this.edges[front]) {
+            resultEdges = resultEdges.concat(edgesSource[front]);
+            for (let e of edgesSource[front]) {
                 if (depth[e.to] === 0) {
                     depth[e.to] = depth[front] + 1;
                     queue.push(e.to);

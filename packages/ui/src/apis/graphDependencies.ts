@@ -37,3 +37,11 @@ export function getPackageDirectDependencies(query: {id: number}): Promise<Axios
         params: query
     })
 }
+
+export function whyPackageInstalled(query: {id: number}): Promise<AxiosResponse<GraphData>> {
+    return request({
+        url: "api/whyInstalled",
+        method: "get",
+        params: query
+    })
+}

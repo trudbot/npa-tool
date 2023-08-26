@@ -66,7 +66,7 @@ const defaultG6Graph: GraphOptions = {
     rankdir: 'LR',
     controlPoints: true,
     nodesepFunc: () => 1,
-    ranksepFunc: () => 30,
+    ranksepFunc: () => 150,
   },
   modes: {
     default: ['drag-canvas', 'zoom-canvas', 'drag-node', 'activate-relations']

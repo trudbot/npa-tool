@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import NodeInfoSideBar from "../NodeInfoSideBar/index.vue";
 import DependencyGraph from "../DependencyGraph/index.vue"
 import {computed, onMounted, ref, shallowRef, watch} from "vue";
 import {useDependencyData} from "../../stores/dependencyData.ts";
 import {useRouter} from "vue-router";
 import {useSelectedPackageData} from "../../stores/selectedPackageData.ts";
 import {ArrowLeft, ArrowRight} from "@element-plus/icons-vue";
+import SideBar from "../SideBar/index.vue"
 
 const dependencyDataStore = useDependencyData();
 const router = useRouter();
@@ -33,7 +33,7 @@ const width = ref(1000);
 const height = ref(800);
 
 function loadNewSize() {
-  const container = graphBox.value;
+  const container: Element = graphBox.value;
   if (!container || !container.clientWidth || !container.clientHeight) return;
   width.value = container.clientWidth;
   height.value = container.clientHeight;
@@ -43,8 +43,9 @@ function loadNewSize() {
 const drag = ref(null);
 
 // 侧栏宽度配置
-const defaultSidebarWidth = 300;
-const maxSidebarWidth = 400;
+const defaultSidebarWidth = 400;
+const maxSidebarWidth = 600;
+const minSidebarWidth = 300;
 // 侧栏的宽度
 const sidebarWidth = ref(defaultSidebarWidth);
 
@@ -71,7 +72,7 @@ function bindDrop() {
   drag.value.onmousedown = (e) => {
     document.onmousemove = (e) => {
       move(-1 * e.movementX)
-      if (sidebarWidth.value <= 20) {
+      if (sidebarWidth.value <= minSidebarWidth) {
         document.onmouseup();
         fold();
       }
@@ -100,6 +101,7 @@ onMounted(() => {
     loadNewSize();
   });
 })
+
 </script>
 
 <template>
@@ -124,7 +126,9 @@ onMounted(() => {
       </el-button>
     </div>
     <div class="sidebar-container" :style="{width: sidebarWidth + 'px'}">
-      <div class="sidebar-content"></div>
+      <div class="sidebar-content">
+        <SideBar></SideBar>
+      </div>
     </div>
   </div>
 </template>

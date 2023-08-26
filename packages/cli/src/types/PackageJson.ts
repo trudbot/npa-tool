@@ -3,7 +3,8 @@ type DependenciesMap = { [packageName: string]: string };
 interface PackageJson {
     name: string;
     version: string;
-    workspaces: string[];
+    workspaces?: string[];
+    license?: string | object[];
     dependencies?: DependenciesMap;
     devDependencies?: DependenciesMap;
     peerDependencies?: DependenciesMap;

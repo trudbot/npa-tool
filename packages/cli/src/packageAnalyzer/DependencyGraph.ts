@@ -1,6 +1,7 @@
 import {Graph} from "./Graph";
 import {DependencyType} from "../types/DependencyType"
 import {PackageInfo} from "../types/PackageJson";
+import {GraphData} from "../types/GraphData";
 
 // 这个类主要做的是索引维护， 即包->索引的对应关系， 建图时的工具类
 // 这里使用包的唯一标识: 路径来做key
@@ -60,7 +61,7 @@ class DependencyGraph {
     }
 
     // 单独查看某个包的依赖
-    getSpecifiedPackageDependencies(id: number, depthLimit: number) {
+    getSpecifiedPackageDependencies(id: number, depthLimit: number): GraphData {
         const {nodes, edges} = this.graph.subGraph(id, depthLimit);
         return {
             nodes: nodes.map((e) => {
@@ -68,7 +69,8 @@ class DependencyGraph {
                 info.depth = e.depth;
                 return info;
             }),
-            edges: edges
+            edges: edges,
+            licenses: {}
         }
     }
 
@@ -78,6 +80,20 @@ class DependencyGraph {
             list: this.graph.edges[id].map(e => {
                 return this.packages[e.to];
             })
+        }
+    }
+
+    // why installed it
+    whyInstalledIt(id: number): GraphData {
+        const {nodes, edges} = this.graph.findPredecessors(id);
+        return {
+            nodes: nodes.map((e) => {
+                const info: PackageInfo = {...this.packages[e.id]};
+                info.depth = e.depth;
+                return info;
+            }),
+            edges: edges,
+            licenses: {}
         }
     }
 }

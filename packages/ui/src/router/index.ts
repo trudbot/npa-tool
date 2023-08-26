@@ -1,6 +1,9 @@
 import {createRouter, createWebHashHistory} from "vue-router";
 import NodeGraph from "../views/NodeInfoSideBar/components/NodeGraph.vue"
 import NodeModule from "../views/NodeInfoSideBar/components/NodeModule.vue"
+import Module from "../views/SideBar/components/Module.vue";
+import Graph from "../views/SideBar/components/Graph.vue"
+import Global from "../views/SideBar/components/Global.vue"
 export default createRouter({
     history: createWebHashHistory(),
     routes: [
@@ -8,7 +11,7 @@ export default createRouter({
             path: "/",
             // component: () => import('../views/HomePage/index.vue'),
             redirect: {
-                name: "Graph",
+                name: "Global",
                 params: {
                     id: 0,
                     depth: -1
@@ -23,13 +26,18 @@ export default createRouter({
             children: [
                 {
                     path: "module",
-                    component: NodeModule,
+                    component: Module,
                     name: "Module"
                 },
                 {
                     path: "graph",
-                    component: NodeGraph,
+                    component: Graph,
                     name: "Graph"
+                },
+                {
+                    path: "global",
+                    name: "Global",
+                    component: Global
                 }
             ]
         }
