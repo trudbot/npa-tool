@@ -3,7 +3,6 @@ import {ref} from 'vue'
 import GraphModule from './GraphModule.vue'
 import {useDependencyData} from '../../../stores/dependencyData.ts'
 
-const modulesArr = ref(['xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx'])
 const licensesArr = ref(['xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx','xxx'
                         ,'xxx','xxx','xxx','xxx','xxx','xxx','xxx'])
 const loopMes = ref('exist')

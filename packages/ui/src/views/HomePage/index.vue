@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import NodeInfoSideBar from "../NodeInfoSideBar/index.vue";
 import DependencyGraph from "../DependencyGraph/index.vue"
+
 import {computed, onMounted, ref, shallowRef, watch} from "vue";
 import {useDependencyData} from "../../stores/dependencyData.ts";
 import {useRouter} from "vue-router";
 import {useSelectedPackageData} from "../../stores/selectedPackageData.ts";
 import {ArrowLeft, ArrowRight} from "@element-plus/icons-vue";
+
 
 const dependencyDataStore = useDependencyData();
 const router = useRouter();
@@ -84,6 +86,7 @@ function bindDrop() {
   }
 }
 
+
 onMounted(() => {
   bindDrop()
   watch([() => props.id, () => props.depth], () => {
@@ -124,7 +127,9 @@ onMounted(() => {
       </el-button>
     </div>
     <div class="sidebar-container" :style="{width: sidebarWidth + 'px'}">
-      <div class="sidebar-content"></div>
+      <div class="sidebar-content">
+        <NodeInfoSideBar/>
+      </div>
     </div>
   </div>
 </template>
@@ -139,6 +144,9 @@ onMounted(() => {
   .sidebar-container {
     height: 100%;
     overflow: hidden;
+    .sidebar-content {
+      
+      }
   }
 
   .line {
@@ -160,5 +168,4 @@ onMounted(() => {
     overflow: hidden;
   }
 }
-
 </style>

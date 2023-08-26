@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {ref} from 'vue'
-
+import {CaretRight} from '@element-plus/icons-vue'
 const props = defineProps({
     moduleName: String,
     modulesArr: Array<String>,
@@ -27,48 +27,54 @@ function showModules(){
 </script>
 
 <template>
-        <section class="modules">
-            <svg @click="showModules" :class="isShow?'show':''" t="1692712125499" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" 
-            p-id="5313" width="200" height="200"><path d="M288.791335 65.582671l446.41733 446.417329-446.41733 446.417329z" 
-            p-id="5314"></path></svg>
-            <h4>{{props.moduleName }}</h4>
+        <div class="modules">
+            <el-icon :class="isShow?'show':''" @click="showModules"><CaretRight /></el-icon>
+            <el-text class="dependencies">{{ props.moduleName }}</el-text>
             <div v-show="isShow">
-                <el-tag
-                    v-for="item in props.modulesArr"
-                    class="mx-1"
-                    effect="dark"
-                    :color="colors[Math.floor(Math.random() * 9)]"
-                    round>
-                    {{ item }}
-                 </el-tag>
+                 <ul>
+                    <li v-for="item in props.modulesArr" :style="{background:colors[Math.floor(Math.random() * 9)]}">
+                        <el-popover
+                        placement="top-start"
+                        title="Dependency"
+                        :width="180"
+                        trigger="hover"
+                        :content="item">
+                            <template #reference>
+                                <el-text class="dependencies" truncated> {{ item }}</el-text>
+                            </template>
+                        </el-popover>
+                    </li>
+                 </ul>
             </div>
-        </section>
+        </div>
 </template>
 
 <style scoped lang="less">
 .modules {
-    min-height: 30vh;
-    border-bottom: 3px solid rgb(188,233,232);
-}
-.modules>div {
-    max-height: 30vh;
-    overflow-x: scroll;
-    
-}
-.modules>svg {
-    float: left;
-    margin-top: 2px;
-    width: 20px;
-    height: 20px;
+    max-height: 30%;
+    border-bottom: 2px solid rgb(188,233,232);
+    .dependencies {
+        color: #000;
+        font-size: 15px;
+        line-height: 100%;
+    }
+    div {
+        max-height: 30vh;
+        overflow-x: scroll;
+    }
+    ul {
+        padding-left: 1%;
+    }
+    ul>li {
+        display: inline-block;
+        width: 30%;
+        margin: 2% 3% 2% 0;
+        border-radius: 15px;
+    }
 }
 .show {
     transform: rotate(90deg);
     transform-origin: 50% 50%;
     transition: all 0.5ms;
-}
-.el-tag {
-    width: 100px;
-    height: 25px;
-    margin: 8px;
 }
 </style>
