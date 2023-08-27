@@ -2,6 +2,7 @@ import {Graph} from "./Graph";
 import {DependencyType} from "../types/DependencyType"
 import {PackageInfo} from "../types/PackageJson";
 import {GraphData} from "../types/GraphData";
+import Fuse from "fuse.js";
 
 // 这个类主要做的是索引维护， 即包->索引的对应关系， 建图时的工具类
 // 这里使用包的唯一标识: 路径来做key
@@ -94,6 +95,20 @@ class DependencyGraph {
             }),
             edges: edges,
             licenses: {}
+        }
+    }
+
+    // 包名查询
+    queryPackage(searchPattern: string) {
+        const fuseOptions = {
+            keys: [
+                'name',
+                'version'
+            ]
+        }
+        const fuse = new Fuse(this.packages, fuseOptions);
+        return {
+            data: fuse.search(searchPattern)
         }
     }
 }

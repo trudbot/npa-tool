@@ -95,6 +95,20 @@ export function createMyServer(analyzer: PackageAnalyzer) {
         }
     })
 
+    app.get('/api/searchPackage', (req, res) => {
+        const str = req.query.pattern;
+        if (typeof str !== "string") {
+            res.status(400).send('Invalid parameters');
+            return;
+        }
+        try {
+            res.json(analyzer.dependencyGraph.queryPackage(str));
+        } catch (e) {
+            console.log(e)
+            res.status(500).send("Error")
+        }
+    })
+
     const server = app.listen(port, () => {
         console.log(chalk.cyan(figlet.textSync('NPA-TOOL')));
         console.log(`  ${chalk.green('->')}  ${chalk.gray('Local: ')}   ${chalk.blue.underline(`http://localhost:${port}`)}`);
