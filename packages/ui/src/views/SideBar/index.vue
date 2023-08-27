@@ -2,9 +2,11 @@
 
 import {onMounted, ref, watch} from "vue";
 import {useSlider} from "../../Composables/animationSlider.ts";
-import {useRouter} from "vue-router";
+import {onBeforeRouteUpdate, useRoute, useRouter} from "vue-router";
 
 const router = useRouter();
+
+// 菜单项
 const menuItem = [
   {
     text: "Module",
@@ -23,9 +25,17 @@ const menuItem = [
   },
 ];
 
+// 菜单动画逻辑
+const {sliderWidth, left, hoverStart, hoverEnd, sliderColor, click, sliderSite} = useSlider(menuItem, 1);
 
-const {sliderWidth, left, hoverStart, hoverEnd, sliderColor, click, sliderSite} = useSlider(menuItem);
+/* 菜单项和路由绑定 */
 
+// 路由绑定菜单项
+onBeforeRouteUpdate((to, from) => {
+  click(menuItem.findIndex(e => e.route === to.name));
+})
+
+// 菜单项绑定路由
 function menuItemClick(index: number) {
   click(index)
   router.push({
@@ -108,7 +118,6 @@ function menuItemClick(index: number) {
     z-index: 0;
     transition: all .5s ease 0s;
     border-radius: 8px;
-
   }
 }
 

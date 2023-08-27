@@ -1,9 +1,9 @@
 import {computed, ref} from "vue";
 
-export function useSlider(item: {color: string}[]) {
+export function useSlider(item: {color: string}[], defaultItem?: number) {
     const sliderWidthP = 100 / item.length;
     const sliderWidth: string = sliderWidthP + '%';
-    const sliderSite = ref<number>(0);
+    const sliderSite = ref<number>(defaultItem | 0);
 
     const sliderColor = computed(() => {
         return item[sliderSite.value].color;
