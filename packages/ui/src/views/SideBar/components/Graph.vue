@@ -47,7 +47,7 @@ const licenseColorList = computed(() => {
           <div class="item-title">{{ graphDataStore.packagesList.length + ' Modules' }}</div>
         </template>
         <template #default>
-          <el-scrollbar height="50vh">
+          <el-scrollbar max-height="50vh">
             <el-tag round v-for="(item, index) in graphDataStore.packagesList"
                      class="tag"
                     :color="colorList[index]"

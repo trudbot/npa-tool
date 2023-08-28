@@ -30,6 +30,7 @@ export function getPackageData(query: {id: number}): Promise<AxiosResponse<Packa
     })
 }
 
+// 获取某个包的一级依赖列表
 export function getPackageDirectDependencies(query: {id: number}): Promise<AxiosResponse<DirectDependencyList>> {
     return request({
         url: "api/directDependencyList",

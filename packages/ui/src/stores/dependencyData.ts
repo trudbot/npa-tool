@@ -27,7 +27,6 @@ export const useDependencyData = defineStore('dependencies', () => {
     watch([graph_depth, graph_id], () => {
         getPackageDependencies({id: graph_id.value, depth: graph_depth.value}).then(res => {
             data.value = res.data;
-            console.log(res.data)
         });
     }, {immediate: true});
 
