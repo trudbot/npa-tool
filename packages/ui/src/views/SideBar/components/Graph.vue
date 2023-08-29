@@ -108,7 +108,7 @@ const colors = ref([
     margin: 2%;
     font-size: 14px;
     font-weight: 545;
-    color: rgb(0, 0, 0);
+    color: rgb(69, 69, 69);
   }
 
   .graph-info-item {
