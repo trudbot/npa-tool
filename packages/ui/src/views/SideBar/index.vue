@@ -29,7 +29,10 @@ const menuItem = [
 const {sliderWidth, left, hoverStart, hoverEnd, sliderColor, click, sliderSite} = useSlider(menuItem, 1);
 
 /* 菜单项和路由绑定 */
-
+onMounted(() => {
+  const route = useRoute();
+  click(menuItem.findIndex(e => e.route === route.name));
+})
 // 路由绑定菜单项
 onBeforeRouteUpdate((to, from) => {
   click(menuItem.findIndex(e => e.route === to.name));

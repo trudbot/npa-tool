@@ -59,7 +59,7 @@ onMounted(() => {
 
   // 监听数据变化， 自动重新渲染图
   watch(
-      () => props.data,
+      () => JSON.stringify(props.data),
       () => {
         if (props.data === undefined) {
           return;
@@ -67,16 +67,16 @@ onMounted(() => {
         let newData = getOriginalObjectOfProxy(props.data);
         // 自定义节点/边
         change(newData);
-
         graph.changeData(newData);
       },
       {immediate: true}
   );
 
   // 容器大小
-  watch([() => props.height, () => props.width], async () => {
-    await graph.changeSize(props.width, props.height);
-    await graph.fitView();
+  watch([() => props.height, () => props.width], () => {
+    console.log("大小改变")
+    graph.changeSize(props.width, props.height);
+    graph.fitView();
   },{immediate: true});
 
 

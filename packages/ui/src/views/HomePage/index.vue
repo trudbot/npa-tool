@@ -27,6 +27,13 @@ function viewPackageDependencies(id: number, depth: number) {
   })
 }
 
+function viewPackageInfo(id: number) {
+  selectedPackageStore.setSelected(id);
+  router.push({
+    name: "Module"
+  })
+}
+
 // 容器大小监听
 const graphBox = ref(null);
 const width = ref(1000);
@@ -57,7 +64,7 @@ function move(px: number) {
 
 // 侧栏折叠
 // 为什么强行用move?
-// 将sidebarWidth的变化都集中到一处
+// 将sidebarWidth的变化都中转到一个函数处理
 // 方便在改变时同步去改变canvas的大小
 function fold() {
   if (sidebarWidth.value > 0) {
@@ -70,16 +77,16 @@ function fold() {
 // 鼠标监听事件
 function bindDrop() {
   drag.value.onmousedown = (e) => {
+    document.onmouseup = function () {
+      document.onmousemove = null
+      document.onmouseup = null
+    }
     document.onmousemove = (e) => {
       move(-1 * e.movementX)
       if (sidebarWidth.value <= minSidebarWidth) {
         document.onmouseup();
         fold();
       }
-    }
-    document.onmouseup = function () {
-      document.onmousemove = null
-      document.onmouseup = null
     }
     return false;
   }
@@ -110,7 +117,7 @@ onMounted(() => {
     <div class="main" ref="graphBox">
       <DependencyGraph :data="dependencyDataStore.graphData" :width="width" :height="height"
                        @nodeDBClick="nodeID => viewPackageDependencies(nodeID, -1)"
-                       @nodeClick="nodeId => selectedPackageStore.setSelected(nodeId)"
+                       @nodeClick="nodeId => viewPackageInfo(nodeId)"
       >
       </DependencyGraph>
     </div>
