@@ -55,10 +55,18 @@ function viewPackage(id: number) {
     </div>
     <div class="data">
       <el-scrollbar max-height="30vh">
-        <div v-for="packageItem in renderData" class="package">
+        <div v-for="(packageItem, index) in renderData" class="package" :key="index">
           <div class="package-info" :style="{background: packageItem.color}" @click="viewPackage(packageItem.info.id)">
-            <el-text class="text" truncated>{{ packageItem.info.name + "@" + packageItem.info.version }}</el-text>
-            <el-text class="text" truncated>{{packageItem.info.path}}</el-text>
+            <el-popover
+                        placement="top-start"
+                        :title="packageItem.info.name + '@' + packageItem.info.version"
+                        :width="320"
+                        trigger="hover"
+                        :content="packageItem.info.path">
+                            <template #reference>
+                              <el-text class="text" truncated>{{ packageItem.info.name + "@" + packageItem.info.version }}</el-text>
+                            </template>
+                        </el-popover>
           </div>
         </div>
       </el-scrollbar>
@@ -78,16 +86,25 @@ function viewPackage(id: number) {
   }
 
   .package {
-    height: 5vh;
+    height: 10%;
+    width: 80%;
     padding-left: 5%;
     padding-right: 5%;
+    margin: auto;
 
     .package-info {
       height: 100%;
-      margin-top: 1vh;
+      margin-top:5%;
       color: white;
       border-radius: 1vw;
-      padding: 2px;
+      // padding:0 0 4px 0;
+      
+      .el-text {
+        height: 28px;
+        line-height: 28px;
+        vertical-align: middle;
+        margin: auto;
+      }
 
       &:hover {
         cursor: pointer;

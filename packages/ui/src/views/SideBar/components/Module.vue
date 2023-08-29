@@ -11,14 +11,14 @@ const name = computed(() => {
     if (selectedPackageStore.packageData) {
         return selectedPackageStore.packageData.name;
     }
-    return '';
+    return '(module not selected)';
 });
 
 const version = computed(() => {
     if (selectedPackageStore.packageData) {
         return selectedPackageStore.packageData.version;
     }
-    return '';
+    return '0.0.0';
 });
 
 
@@ -26,16 +26,22 @@ const description = computed(() => {
     if (selectedPackageStore.packageData && selectedPackageStore.packageData.description) {
         return selectedPackageStore.packageData.description;
     }
-    return '';
+    return 'Description of the module';
 })
+
+const path = computed(()=>{
+    if (selectedPackageStore.path) {
+        return selectedPackageStore.path;
+    }
+    return '../node_modules'
+})
+
 const moduleHref = computed(() => {
     if (selectedPackageStore.packageData && selectedPackageStore.packageData.homepage) {
         return selectedPackageStore.packageData.homepage;
     }
+    return 'https://github.com/';
 })
-
-
-const path = '../xxx/xxx/xxx/xxx/xxxxxxxxxxxxxxxxxx'
 
 const colors = ref([
   "#BDD2FD",
@@ -64,10 +70,6 @@ function showDependencies(){
   });
 }
 
-function showBeRelied(){
-    //展示被依赖
-}
-
 </script>
 
 <template>
@@ -79,7 +81,7 @@ function showBeRelied(){
                     <el-popover
                     placement="top-start"
                     title="Module"
-                    :width="150"
+                    :width="200"
                     trigger="hover"
                     :content="name">
                         <template #reference>
@@ -110,7 +112,9 @@ function showBeRelied(){
 .module {
   .main-info {
         padding: 2% 2% 1% 2%;
-
+        ul>li {
+            font-weight: 548;
+        }
         ul>li:nth-child(-n+3) {
             margin-bottom: 6%;
         }
@@ -132,6 +136,7 @@ function showBeRelied(){
         .el-link {
             margin-left: 1%;
             vertical-align: bottom;
+            font-weight: 548;
         }
         .link {
             color: rgb(94, 180, 237);

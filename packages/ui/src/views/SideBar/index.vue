@@ -53,6 +53,7 @@ function menuItemClick(index: number) {
            :style="{
               color: index === sliderSite ? 'white' : 'black'
            }"
+           :key="index"
            @click="menuItemClick(index)"
            @mouseover="hoverStart(index)"
            @mouseleave="hoverEnd">{{ item.text }}

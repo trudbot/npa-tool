@@ -3,39 +3,44 @@ import { Pie } from '@antv/g2plot';
 import {useDependencyData} from "../../../stores/dependencyData.ts";
 import {computed, onMounted, ref, watch} from "vue";
 import PiePlot from "./PiePlot.vue";
+import GraphModule from './GraphModule.vue';
 
 const graphDataStore = useDependencyData();
 
+const licensesArr =  ref([''])
+licensesArr.value = graphDataStore.licensesList.map((it)=>it.licenseName)
+
 function adjustLength(label: string) {
-  if (label.length >= 13) {
+  if (label.length >= 12) {
     return label.slice(0, 9) + "...";
   }
   return label;
 }
 
-const colors = [
-  "#5B8FF9",
-  "#5AD8A6",
-  "#5D7092",
-  "#F6BD16",
-  "#E8684A",
-  "#6DC8EC",
-  "#9270CA",
-  "#FF9D4D",
-  "#269A99",
-  "#FF99C3",
-];
-const colorList = computed(() => {
-  return graphDataStore.packagesList.map(() => {
-    return colors[Math.floor(Math.random() * 9)]
-  });
-})
+const colors = ref([
+  "#BDD2FD",
+  "#BDEFDB",
+  "#C2C8D5",
+  "#FBE5A2",
+  "#F6C3B7",
+  "#B6E3F5",
+  "#D3C6EA",
+  "#FFD8B8",
+  "#AAD8D8",
+  "#FFD6E7",
+]);
 
-const licenseColorList = computed(() => {
-  return graphDataStore.licensesList.map(() => {
-    return colors[Math.floor(Math.random() * 9)]
-  });
-})
+// const colorList = computed(() => {
+//   return graphDataStore.packagesList.map(() => {
+//     return colors[Math.floor(Math.random() * 10)]
+//   });
+// })
+
+// const licenseColorList = computed(() => {
+//   return graphDataStore.licensesList.map(() => {
+//     return colors[Math.floor(Math.random() * 10)]
+//   });
+// })
 
 </script>
 
@@ -48,12 +53,13 @@ const licenseColorList = computed(() => {
         </template>
         <template #default>
           <el-scrollbar max-height="50vh">
-            <el-tag round v-for="(item, index) in graphDataStore.packagesList"
+            <!-- <el-tag round v-for="(item, index) in graphDataStore.packagesList"
                      class="tag"
                     :color="colorList[index]"
             >
-              {{ adjustLength(item) }}
-            </el-tag>
+              {{ adjustLength(item) }} 
+            </el-tag>  -->
+            <GraphModule module-name="xxx" :modules-arr="graphDataStore.packagesList"/>
           </el-scrollbar>
         </template>
       </el-collapse-item>
@@ -65,10 +71,11 @@ const licenseColorList = computed(() => {
           <el-scrollbar height="50vh">
             <el-tag round v-for="(item, index) in graphDataStore.licensesList"
                     class="tag"
-                    :color="licenseColorList[index]"
-            >
-              {{ item.licenseName}}
+                    :key="index"
+                    :color="colors[Math.floor(Math.random() * 10)]">
+              {{ adjustLength(item.licenseName) }}
             </el-tag>
+            <!-- <GraphModule :modules-arr="licensesArr"/> -->
             <PiePlot></PiePlot>
           </el-scrollbar>
         </template>
@@ -91,8 +98,9 @@ const licenseColorList = computed(() => {
     font-family: monospace;
     width: 25%;
     margin: 2%;
-    font-size: 10px;
-    color: white;
+    font-size: 14px;
+    font-weight: 545; 
+    color: rgb(0, 0, 0);
   }
 }
 </style>
