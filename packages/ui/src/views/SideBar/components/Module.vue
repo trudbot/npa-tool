@@ -42,18 +42,18 @@ const moduleHref = computed(() => {
     return "https://github.com/";
 });
 
-const colors = ref([
-    "#BDD2FD",
-    "#BDEFDB",
-    "#C2C8D5",
-    "#FBE5A2",
-    "#F6C3B7",
-    "#B6E3F5",
-    "#D3C6EA",
-    "#FFD8B8",
-    "#AAD8D8",
-    "#FFD6E7",
-]);
+// const colors = ref([
+//     "#BDD2FD",
+//     "#BDEFDB",
+//     "#C2C8D5",
+//     "#FBE5A2",
+//     "#F6C3B7",
+//     "#B6E3F5",
+//     "#D3C6EA",
+//     "#FFD8B8",
+//     "#AAD8D8",
+//     "#FFD6E7",
+// ]);
 
 // onMounted(()=>{
 
@@ -73,32 +73,41 @@ function showDependencies() {
 <template>
     <div class="module">
         <div class="main-info">
-            <ul>
-                <li :style="{ background: colors[Math.floor(Math.random() * 9)] }">
-                    <el-icon><Folder /></el-icon>
-                    <el-popover placement="top-start" title="Module" :width="200" trigger="hover" :content="name">
-                        <template #reference>
-                            <el-text class="module-name" truncated>{{ name }}</el-text>
-                        </template>
-                    </el-popover>
-                    <el-icon class="link+ icon"><Link /></el-icon>
-                    <el-link :href="moduleHref" target="_blank" type="primary" :underline="false"
-                        >Link of Github</el-link
-                    >
-                </li>
-                <li :style="{ background: colors[Math.floor(Math.random() * 9)] }">
-                    <el-icon class="icon"><InfoFilled /></el-icon>
-                    <el-text class="module-text">version: {{ version }}</el-text>
-                </li>
-                <li :style="{ background: colors[Math.floor(Math.random() * 9)] }">
-                    <el-icon class="icon"><FolderOpened /></el-icon>
-                    <el-text class="module-text">path: {{ path }}</el-text>
-                </li>
-                <li :style="{ display: 'flex', justifyContent: 'space-around' }">
-                    <el-button>依赖图</el-button>
-                    <el-button>安装源</el-button>
-                </li>
-            </ul>
+            <el-card class="box-card">
+                <template #header>
+                    <div class="card-header">
+                        <span>节点信息</span>
+                        <el-link :href="moduleHref" target="_blank" type="primary" :underline="false"
+                            ><el-icon class="link+ icon"><Link /></el-icon>Link of Github</el-link
+                        >
+                    </div>
+                </template>
+                <ul>
+                    <li>
+                        <el-popover placement="right" title="Module" :width="200" trigger="hover" :content="name">
+                            <template #reference>
+                                <el-text class="module-name" truncated
+                                    ><el-icon color="#409EFC"><Folder /></el-icon> {{ name }}</el-text
+                                >
+                            </template>
+                        </el-popover>
+                    </li>
+                    <li>
+                        <el-text class="module-text"
+                            ><el-icon color="#409EFC"><InfoFilled /></el-icon> version: {{ version }}</el-text
+                        >
+                    </li>
+                    <li>
+                        <el-text class="module-text"
+                            ><el-icon color="#409EFC"><FolderOpened /></el-icon> path: {{ path }}</el-text
+                        >
+                    </li>
+                    <li :style="{ display: 'flex', justifyContent: 'space-around' }">
+                        <el-button>依赖图</el-button>
+                        <el-button>安装源</el-button>
+                    </li>
+                </ul>
+            </el-card>
         </div>
     </div>
 </template>
@@ -106,40 +115,27 @@ function showDependencies() {
 <style scoped lang="less">
 .module {
     .main-info {
-        padding: 2% 2% 1% 2%;
-        ul > li {
-            font-weight: 548;
+        padding: 0 2% 1% 2%;
+        .box-card {
+            width: 100%;
+            .card-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            ul {
+                li {
+                    margin-bottom: 18px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    cursor: pointer;
+                    .el-button {
+                        width: 40%;
+                    }
+                }
+            }
         }
-        ul > li:nth-child(-n + 3) {
-            margin-bottom: 6%;
-        }
-        .module-name {
-            width: 46%;
-            line-height: 100%;
-            margin: 0 0 0 2%;
-            color: #000;
-        }
-        .module-text {
-            width: 90%;
-            line-height: 100%;
-            margin: 0 0 0 2%;
-            color: #000;
-        }
-        .icon {
-            vertical-align: middle;
-        }
-        .el-link {
-            margin-left: 1%;
-            vertical-align: bottom;
-            font-weight: 548;
-        }
-        .link {
-            color: rgb(94, 180, 237);
-        }
-    }
-    .el-button {
-        width: 40%;
-        // margin: 2% 5% 0 5%;
     }
 }
 </style>
