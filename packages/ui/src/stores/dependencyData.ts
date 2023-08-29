@@ -8,6 +8,8 @@ export const useDependencyData = defineStore('dependencies', () => {
     const data = shallowRef<GraphData>();
     const graph_id = ref<number>(0), graph_depth = ref<number>(-1);
 
+    // 图的展示布局， false 为dagre, true为force2
+    const forceLayout = ref(false);
     function setArgs(id: number, depth: number) {
         graph_id.value = id;
         graph_depth.value = depth;
@@ -55,6 +57,27 @@ export const useDependencyData = defineStore('dependencies', () => {
         }
     });
 
+    const noLabelGraphData = computed(() => {
+        return {
+            nodes: data.value.nodes.map((e, idx) => {
+                return {
+                    id: e.id.toString(),
+                    cluster: e.depth,
+                    name: e.name,
+                    version: e.version,
+                    path: e.path,
+                };
+            }),
+            edges: data.value.edges.map((e) => {
+                return {
+                    source: e.from.toString(),
+                    target: e.to.toString(),
+                    info: e.info,
+                };
+            })
+        }
+    })
+
     const packagesList = computed(() => {
         if (data.value === undefined) {
             return [];
@@ -88,5 +111,5 @@ export const useDependencyData = defineStore('dependencies', () => {
     })
 
 
-    return {data, graphData, setArgs, packagesList, setId, setDepth, licensesList, pieData};
+    return {data, graphData, setArgs, packagesList, setId, setDepth, licensesList, pieData, forceLayout, noLabelGraphData};
 })
