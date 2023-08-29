@@ -6,6 +6,7 @@ import {useRouter} from "vue-router";
 import {useSelectedPackageData} from "../../stores/selectedPackageData.ts";
 import {ArrowLeft, ArrowRight} from "@element-plus/icons-vue";
 import SideBar from "../SideBar/index.vue"
+import MarcoDependencyGraph from "../MacroDependencyGraph/index.vue"
 
 const dependencyDataStore = useDependencyData();
 const router = useRouter();
@@ -115,7 +116,13 @@ onMounted(() => {
   <div class="container">
 
     <div class="main" ref="graphBox">
-      <DependencyGraph :data="dependencyDataStore.graphData" :width="width" :height="height"
+      <MarcoDependencyGraph v-if="dependencyDataStore.forceLayout"
+                            :data="dependencyDataStore.noLabelGraphData" :width="width" :height="height">
+                            @nodeDBClick="nodeID => viewPackageDependencies(nodeID, -1)"
+                            @nodeClick="nodeId => viewPackageInfo(nodeId)"
+      </MarcoDependencyGraph>
+      <DependencyGraph v-else
+                      :data="dependencyDataStore.graphData" :width="width" :height="height"
                        @nodeDBClick="nodeID => viewPackageDependencies(nodeID, -1)"
                        @nodeClick="nodeId => viewPackageInfo(nodeId)"
       >
