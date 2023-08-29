@@ -42,6 +42,10 @@ const tooltip = new G6.Tooltip({
     return outDiv;
   },
 });
+// 工具栏
+const toolbar = new G6.ToolBar({
+  position: { x: 10, y: 10 },
+});
 
 const defaultG6Graph: GraphOptions = {
   container: "graph-container",
@@ -71,7 +75,9 @@ const defaultG6Graph: GraphOptions = {
   modes: {
     default: ['drag-canvas', 'zoom-canvas', 'drag-node', 'activate-relations']
   },
-  plugins: [tooltip],
+  plugins: [tooltip,toolbar],
+  // 设置为true，启用 redo & undo 栈功能
+  enabledStack: true,
 }
 
 export { defaultG6Graph }

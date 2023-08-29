@@ -84,7 +84,7 @@ onMounted(() => {
       });
     });
     graph.updateItem(node, {
-      size: 12,
+      size: 20,
       style: {
         shadowColor: node.getModel().style.stroke,
         strokeOpacity: 0.5,
@@ -111,7 +111,7 @@ onMounted(() => {
       });
     });
     graph.updateItem(node, {
-      size: 8,
+      size: 16,
       style: {
         shadowColor: "",
       },
