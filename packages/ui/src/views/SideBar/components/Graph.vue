@@ -47,12 +47,12 @@ const colors = ref([
 <template>
   <div class="graph-data-container">
     <div class="graph-type-switcher graph-info-item">
-      <img aria-hidden="true" width="40px" height="40px" src="../../../assets/icons/flow_chart.svg" alt="">
+      <img width="40" height="40" src="../../../assets/icons/flow_chart.svg" alt="">
       <label class="switch btn-color-mode-switch">
         <input type="checkbox" name="color_mode" id="color_mode" value="1" v-model="graphDataStore.forceLayout">
         <label for="color_mode" data-on="Force" data-off="Dagre" class="btn-color-mode-switch-inner"></label>
       </label>
-      <img aria-hidden="true" width="40px" height="40px" src="../../../assets/icons/Diagram-4.svg" alt="">
+      <img width="40" height="40" src="../../../assets/icons/Diagram-4.svg" alt="">
     </div>
     <el-collapse accordion class="graph-info-item">
       <el-collapse-item>
@@ -125,7 +125,7 @@ const colors = ref([
     text-align: center;
   }
 
-  .btn-container i{
+  .btn-container img{
     display: inline-block;
     position: relative;
     top: -9px;
