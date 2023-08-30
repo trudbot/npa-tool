@@ -138,4 +138,8 @@ packages/cli/.vscode
 packages/ui/.vscode
 
 # cli build
-packages/cli/dist
+packages/cli/lib
+packages/cli/ui
+
+# ui build
+packages/ui/dist

@@ -5,6 +5,7 @@ import {searchPackage} from "../../../apis/searchPackage.ts";
 import {dark} from "../../../assets/colorSystem.ts";
 import {useRouter} from "vue-router";
 
+const defaultDepthLimit = parseInt(import.meta.env.VITE_DEPTH_LIMIT);
 const router = useRouter();
 const pattern = ref<string>("");
 const data = shallowRef([]);
@@ -38,7 +39,7 @@ function viewPackage(id: number) {
     name: "Module",
     params: {
       id: id,
-      depth: -1
+      depth: defaultDepthLimit
     }
   })
 }
@@ -98,7 +99,7 @@ function viewPackage(id: number) {
       color: white;
       border-radius: 1vw;
       // padding:0 0 4px 0;
-      
+
       .el-text {
         height: 28px;
         line-height: 28px;

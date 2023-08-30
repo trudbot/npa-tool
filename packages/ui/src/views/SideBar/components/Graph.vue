@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { Pie } from '@antv/g2plot';
+import {Pie} from '@antv/g2plot';
 import {useDependencyData} from "../../../stores/dependencyData.ts";
 import {computed, onMounted, ref, watch} from "vue";
 import PiePlot from "./PiePlot.vue";
 import GraphModule from './GraphModule.vue';
+import {light as colors} from "../../../assets/colorSystem.ts";
 
 const graphDataStore = useDependencyData();
 
-const licensesArr =  ref([''])
-licensesArr.value = graphDataStore.licensesList.map((it)=>it.licenseName)
+const licensesArr = ref([''])
+licensesArr.value = graphDataStore.licensesList.map((it) => it.licenseName);
 
 function adjustLength(label: string) {
   if (label.length >= 12) {
@@ -17,30 +18,29 @@ function adjustLength(label: string) {
   return label;
 }
 
-const colors = ref([
-  "#BDD2FD",
-  "#BDEFDB",
-  "#C2C8D5",
-  "#FBE5A2",
-  "#F6C3B7",
-  "#B6E3F5",
-  "#D3C6EA",
-  "#FFD8B8",
-  "#AAD8D8",
-  "#FFD6E7",
-]);
+const selectedDepth = ref(parseInt(import.meta.env.VITE_DEPTH_LIMIT));
+const inputDisable = ref(false);
+const alertVisible = ref(false);
 
-// const colorList = computed(() => {
-//   return graphDataStore.packagesList.map(() => {
-//     return colors[Math.floor(Math.random() * 10)]
-//   });
-// })
+function confirmDepth() {
+  if (selectedDepth.value === 0) {
+    return;
+  }
+  if (selectedDepth.value === -1) {
+    alertVisible.value = true;
+    inputDisable.value = true;
+  } else {
+    graphDataStore.setDepth(selectedDepth.value);
+  }
+}
 
-// const licenseColorList = computed(() => {
-//   return graphDataStore.licensesList.map(() => {
-//     return colors[Math.floor(Math.random() * 10)]
-//   });
-// })
+function secondConfirmDepth(result) {
+  if (result) {
+    graphDataStore.setDepth(selectedDepth.value);
+  }
+  alertVisible.value = false;
+  inputDisable.value = false;
+}
 
 </script>
 
@@ -89,6 +89,23 @@ const colors = ref([
         </template>
       </el-collapse-item>
     </el-collapse>
+    <div class="header">Depth Limit</div>
+    <div class="depth-selector">
+      <el-input-number :min="-1" :max="25" v-model="selectedDepth" :disabled="inputDisable"></el-input-number>
+      <el-popover :visible="alertVisible">
+        <p>The depth limit will not be set. Are you sure to continue?</p>
+        <div style="text-align: right; margin: 0">
+          <el-button size="small" text @click="secondConfirmDepth(false)">cancel</el-button>
+          <el-button size="small" type="primary" @click="secondConfirmDepth(true)"
+          >confirm
+          </el-button
+          >
+        </div>
+        <template #reference>
+          <el-button @click="confirmDepth">confirm</el-button>
+        </template>
+      </el-popover>
+    </div>
   </div>
 </template>
 
@@ -116,16 +133,36 @@ const colors = ref([
   }
 }
 
+.depth-selector {
+  margin-top: 30px;
+  display: flex;
+  margin-bottom: 20px;
+  justify-content: space-between;
+}
+
+.header {
+  //text-align: center;
+  margin-bottom: 20px;
+  font-size: 30px;
+  font-weight: 600;
+  background-image: linear-gradient(to left, #fe636e, #ffbb74);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  border-bottom: 1px solid #f9f9f9;
+}
+
 .graph-type-switcher {
   display: flex;
   justify-content: center;
   align-items: center;
-  .btn-container{
+
+  .btn-container {
     display: block;
     text-align: center;
   }
 
-  .btn-container img{
+  .btn-container img {
     display: inline-block;
     position: relative;
     top: -9px;
@@ -137,13 +174,13 @@ const colors = ref([
     font-weight: 500;
   }
 
-  .btn-color-mode-switch{
+  .btn-color-mode-switch {
     display: inline-block;
     margin: 0px;
     position: relative;
   }
 
-  .btn-color-mode-switch > label.btn-color-mode-switch-inner{
+  .btn-color-mode-switch > label.btn-color-mode-switch-inner {
     margin: 0;
     width: 200px;
     height: 30px;
@@ -156,7 +193,7 @@ const colors = ref([
     display: block;
   }
 
-  .btn-color-mode-switch > label.btn-color-mode-switch-inner:before{
+  .btn-color-mode-switch > label.btn-color-mode-switch-inner:before {
     content: attr(data-on);
     position: absolute;
     font-size: 12px;
@@ -166,7 +203,7 @@ const colors = ref([
 
   }
 
-  .btn-color-mode-switch > label.btn-color-mode-switch-inner:after{
+  .btn-color-mode-switch > label.btn-color-mode-switch-inner:after {
     content: attr(data-off);
     width: 100px;
     height: 16px;
@@ -181,14 +218,14 @@ const colors = ref([
     padding: 5px 0px;
   }
 
-  .btn-color-mode-switch > .alert{
+  .btn-color-mode-switch > .alert {
     display: none;
     background: #FF9800;
     border: none;
     color: #fff;
   }
 
-  .btn-color-mode-switch input[type="checkbox"]{
+  .btn-color-mode-switch input[type="checkbox"] {
     cursor: pointer;
     width: 50px;
     height: 25px;
@@ -199,29 +236,29 @@ const colors = ref([
     margin: 0px;
   }
 
-  .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner{
+  .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner {
     background: #151515;
     color: #fff;
   }
 
-  .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner:after{
+  .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner:after {
     content: attr(data-on);
     left: 98px;
     background: #3c3c3c;
   }
 
-  .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner:before{
+  .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner:before {
     content: attr(data-off);
     right: auto;
     left: 20px;
   }
 
-  .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner{
+  .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner {
     /*background: #66BB6A; */
     /*color: #fff;*/
   }
 
-  .btn-color-mode-switch input[type="checkbox"]:checked ~ .alert{
+  .btn-color-mode-switch input[type="checkbox"]:checked ~ .alert {
     display: block;
   }
 

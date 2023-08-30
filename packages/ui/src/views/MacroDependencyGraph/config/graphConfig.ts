@@ -5,7 +5,7 @@ const defaultG6Graph: GraphOptions = {
     container: "graph-container",
     fitView: true,
     defaultNode: {
-        size: 16,
+        size: 20,
     },
     defaultEdge: {
         size: 1,

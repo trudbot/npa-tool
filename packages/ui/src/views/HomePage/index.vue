@@ -8,6 +8,7 @@ import {ArrowLeft, ArrowRight} from "@element-plus/icons-vue";
 import SideBar from "../SideBar/index.vue"
 import MarcoDependencyGraph from "../MacroDependencyGraph/index.vue"
 
+const defaultDepthLimit = parseInt(import.meta.env.VITE_DEPTH_LIMIT);
 const dependencyDataStore = useDependencyData();
 const router = useRouter();
 const selectedPackageStore = useSelectedPackageData();
@@ -18,12 +19,12 @@ const props = defineProps<{
 }>();
 
 // 查看某个包的依赖
-function viewPackageDependencies(id: number, depth: number) {
+function viewPackageDependencies(id: number) {
   router.push({
     name: "Graph",
     params: {
       id: id,
-      depth: depth
+      depth: defaultDepthLimit
     }
   })
 }
@@ -85,7 +86,7 @@ function bindDrop() {
     document.onmousemove = (e) => {
       move(-1 * e.movementX)
       if (sidebarWidth.value <= minSidebarWidth) {
-        document.onmouseup();
+        document.onmouseup(undefined);
         fold();
       }
     }
@@ -117,13 +118,13 @@ onMounted(() => {
 
     <div class="main" ref="graphBox">
       <MarcoDependencyGraph v-if="dependencyDataStore.forceLayout"
-                            :data="dependencyDataStore.noLabelGraphData" :width="width" :height="height">
-                            @nodeDBClick="nodeID => viewPackageDependencies(nodeID, -1)"
-                            @nodeClick="nodeId => viewPackageInfo(nodeId)"
+                            :data="dependencyDataStore.noLabelGraphData" :width="width" :height="height"
+                            @nodeDBClick="nodeID => viewPackageDependencies(nodeID)"
+                            @nodeClick="nodeId => viewPackageInfo(nodeId)">
       </MarcoDependencyGraph>
       <DependencyGraph v-else
                       :data="dependencyDataStore.graphData" :width="width" :height="height"
-                       @nodeDBClick="nodeID => viewPackageDependencies(nodeID, -1)"
+                       @nodeDBClick="nodeID => viewPackageDependencies(nodeID)"
                        @nodeClick="nodeId => viewPackageInfo(nodeId)"
       >
       </DependencyGraph>

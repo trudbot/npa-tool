@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {onMounted, ref, watch} from "vue";
+import {onMounted} from "vue";
 import {useSlider} from "../../Composables/animationSlider.ts";
 import {onBeforeRouteUpdate, useRoute, useRouter} from "vue-router";
 

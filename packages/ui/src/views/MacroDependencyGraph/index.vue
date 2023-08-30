@@ -84,7 +84,7 @@ onMounted(() => {
       });
     });
     graph.updateItem(node, {
-      size: 12,
+      size: 30,
       style: {
         shadowColor: node.getModel().style.stroke,
         strokeOpacity: 0.5,
@@ -111,7 +111,7 @@ onMounted(() => {
       });
     });
     graph.updateItem(node, {
-      size: 8,
+      size: 20,
       style: {
         shadowColor: "",
       },
@@ -121,7 +121,7 @@ onMounted(() => {
 
   // 监听数据变化， 自动重新渲染图
   watch(
-      () => props.data,
+      () => JSON.stringify(props.data),
       () => {
         if (props.data === undefined) {
           return;

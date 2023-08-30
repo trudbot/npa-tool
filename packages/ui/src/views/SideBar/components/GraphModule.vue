@@ -1,22 +1,9 @@
 <script setup lang="ts">
-import {ref} from 'vue'
+import {light as colors} from "../../../assets/colorSystem.ts";
 
 const props = defineProps({
     modulesArr: Array<string>,
 })
-const colors = ref([
-  "#BDD2FD",
-  "#BDEFDB",
-  "#C2C8D5",
-  "#FBE5A2",
-  "#F6C3B7",
-  "#B6E3F5",
-  "#D3C6EA",
-  "#FFD8B8",
-  "#AAD8D8",
-  "#FFD6E7",
-])
-
 </script>
 
 <template>
@@ -40,23 +27,25 @@ const colors = ref([
 
 <style scoped lang="less">
 .modules {
-    
+
     .dependencies {
-        color: #000;
+        color: #4f4f4f;
         font-size: 14px;
         font-weight: 545;
         vertical-align: middle;
-        padding-left: 2px;
-        font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+        font-family: monospace;
     }
     ul {
         padding-left: 1%;
     }
     ul>li {
+        text-align: center;
         display: inline-block;
         width: 25%;
         margin: 2%;
         border-radius: 15px;
+        padding-left: 4px;
+        padding-right: 4px;
     }
 }
 </style>

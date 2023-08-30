@@ -13,8 +13,8 @@ function showLoop(){
     <h3>Circular Dependency</h3><br>
     <div class="loop-mes">
         <el-text :class="loopStatus==='exist'?'exist':'none'">status : {{ loopStatus }}</el-text>
-        <el-button @click="showLoop" :type="loopStatus==='exist'?'primary':'info'" 
-        :disabled="loopStatus==='exist'?false:true" round plain >show the loop</el-button>
+        <el-button @click="showLoop" :type="loopStatus==='exist'?'primary':'info'"
+                   :disabled="loopStatus!=='exist'" round plain >show the loop</el-button>
     </div>
 </div>
 </template>

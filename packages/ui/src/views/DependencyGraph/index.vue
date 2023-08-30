@@ -10,6 +10,7 @@ const props = defineProps<{
   height: number;
   width: number;
   data: GraphData | undefined;
+  container?: string | undefined;
 }>();
 
 const emit = defineEmits<{
@@ -55,6 +56,11 @@ function change(data:any) {
 }
 
 onMounted(() => {
+  if (props.container !== undefined) {
+    defaultG6Graph.container = props.container;
+  } else {
+    defaultG6Graph.container = "graph-container";
+  }
   const graph = new G6.Graph(defaultG6Graph);
 
   // 监听数据变化， 自动重新渲染图
@@ -74,7 +80,6 @@ onMounted(() => {
 
   // 容器大小
   watch([() => props.height, () => props.width], () => {
-    console.log("大小改变")
     graph.changeSize(props.width, props.height);
     graph.fitView();
   },{immediate: true});

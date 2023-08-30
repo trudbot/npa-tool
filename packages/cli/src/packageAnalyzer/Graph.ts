@@ -41,10 +41,12 @@ class Graph<E> {
     // 在构建图时， 保存了每条边的反向(相当于建了一个无向图)， 所以使得这部分异常容易
     findPredecessors(id: number) {
         const res = this.subGraph(id, -1, true);
-        res.edges.forEach(e => {
-            const temp = e.to;
-            e.to = e.from;
-            e.from = temp;
+        res.edges = res.edges.map(e => {
+            return {
+                from: e.to,
+                to: e.from,
+                info: e.info
+            }
         })
         return res;
     }
@@ -81,6 +83,8 @@ class Graph<E> {
             edges: resultEdges
         }
     }
+
+    // 找环
 
 }
 

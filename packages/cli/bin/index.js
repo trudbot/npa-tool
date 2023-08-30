@@ -1,3 +1,3 @@
 #!/usr/bin/env node
-const {main} = require("../dist/");
+const {main} = require("../lib/");
 main();

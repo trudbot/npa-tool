@@ -2,11 +2,13 @@ import {defineStore} from "pinia";
 import {GraphData} from "../apis/types/GraphData.ts";
 import {computed, ref, shallowRef, watch} from "vue";
 import {getPackageDependencies} from "../apis/graphDependencies.ts";
+import {dark} from "../assets/colorSystem.ts";
 
 // 维护当前图的信息以及展示方式的状态
 export const useDependencyData = defineStore('dependencies', () => {
+    const defaultDepthLimit = parseInt(import.meta.env.VITE_DEPTH_LIMIT);
     const data = shallowRef<GraphData>();
-    const graph_id = ref<number>(0), graph_depth = ref<number>(-1);
+    const graph_id = ref<number>(0), graph_depth = ref<number>(defaultDepthLimit);
 
     // 图的展示布局， false 为dagre, true为force2
     const forceLayout = ref(false);
@@ -95,7 +97,7 @@ export const useDependencyData = defineStore('dependencies', () => {
         for (let licenseName in data.value.licenses) {
             res.push({
                 licenseName: licenseName,
-                licenseNum: data.value.licenses[licenseName]
+                licenseNum: data.value.licenses[licenseName],
             })
         }
         return res;

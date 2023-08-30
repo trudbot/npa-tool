@@ -1,6 +1,4 @@
 import {createRouter, createWebHashHistory} from "vue-router";
-import NodeGraph from "../views/NodeInfoSideBar/components/NodeGraph.vue"
-import NodeModule from "../views/NodeInfoSideBar/components/NodeModule.vue"
 import Module from "../views/SideBar/components/Module.vue";
 import Graph from "../views/SideBar/components/Graph.vue"
 import Global from "../views/SideBar/components/Global.vue"
@@ -14,7 +12,7 @@ export default createRouter({
                 name: "Global",
                 params: {
                     id: 0,
-                    depth: -1
+                    depth: import.meta.env.VITE_DEPTH_LIMIT
                 }
             }
         },
@@ -40,6 +38,12 @@ export default createRouter({
                     component: Global
                 }
             ]
+        },
+        {
+            path: "/why/:id",
+            name: "Why",
+            props: true,
+            component: () => import('../views/WhyInstall/index.vue')
         }
     ]
 })
