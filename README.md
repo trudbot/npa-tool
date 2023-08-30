@@ -20,10 +20,10 @@
 - 等等。
 
 **npa-tool**是一个开源的命令行界面交互工具， 能从项目的package.json出发， 得到项目的所有包依赖关系， 并可视化展现。
-
+![](https://trudbot-md-img.oss-cn-shanghai.aliyuncs.com/202308301128686.png)
 ## 📦Installation
 ```shell
-npm install -g npa-tool --production
+npm install -g npa-tool
 ```
 
 ## 🔨 Usage
@@ -36,7 +36,7 @@ Usage: npa-cli analyze [options] [root-path]
 分析指定目录的包依赖关系
 
 Arguments:
-  root-path           解析的项目根目录
+  root-path           解析的项目根目录, 默认为当前目录
 
 Options:
   --depth <depth>     向下递归分析的层次深度
