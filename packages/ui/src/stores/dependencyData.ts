@@ -2,7 +2,6 @@ import {defineStore} from "pinia";
 import {GraphData} from "../apis/types/GraphData.ts";
 import {computed, ref, shallowRef, watch} from "vue";
 import {getPackageDependencies} from "../apis/graphDependencies.ts";
-import {dark} from "../assets/colorSystem.ts";
 
 // 维护当前图的信息以及展示方式的状态
 export const useDependencyData = defineStore('dependencies', () => {
@@ -39,7 +38,7 @@ export const useDependencyData = defineStore('dependencies', () => {
             return undefined;
         }
         return {
-            nodes: data.value.nodes.map((e, idx) => {
+            nodes: data.value.nodes.map((e) => {
                 return {
                     id: e.id.toString(),
                     label: e.name + "@" + e.version,
@@ -61,7 +60,7 @@ export const useDependencyData = defineStore('dependencies', () => {
 
     const noLabelGraphData = computed(() => {
         return {
-            nodes: data.value.nodes.map((e, idx) => {
+            nodes: data.value.nodes.map((e) => {
                 return {
                     id: e.id.toString(),
                     cluster: e.depth,

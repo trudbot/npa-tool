@@ -1,5 +1,5 @@
 import {defineStore} from "pinia";
-import {computed, ref, shallowRef, watch} from "vue";
+import {ref, shallowRef, watch} from "vue";
 import {PackageJson} from "../apis/types/PackageJson.ts";
 import {getPackageData, getPackageDirectDependencies} from "../apis/graphDependencies.ts";
 

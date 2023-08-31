@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import {computed, onMounted, ref, shallowRef, watch} from "vue";
-import {PackageInfo} from "../../../apis/types/PackageJson.ts";
+import {computed, ref, shallowRef, watch} from "vue";
 import {searchPackage} from "../../../apis/searchPackage.ts";
 import {dark} from "../../../assets/colorSystem.ts";
 import {useRouter} from "vue-router";
@@ -179,8 +178,11 @@ function viewPackage(id: number) {
   padding-bottom: 6px;
   font-weight: 700;
   border-width: 3px;
-  border-image: linear-gradient(to right, @primary, @secondary);
   border-image-slice: 1;
+}
+
+.form__field:focus {
+  border-image: linear-gradient(to right, @primary, @secondary);
 }
 
 /* reset input */

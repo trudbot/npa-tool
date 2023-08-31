@@ -1,7 +1,6 @@
 import {globSync} from "glob";
 import {PackageJson} from "../types/PackageJson";
 import path from "path";
-import fs from "fs";
 
 // 读取项目的package.json
 export function readPackageJson(root: string) {
@@ -33,8 +32,7 @@ export function readPackageJson(root: string) {
     for (let packagePath of packagePathList) {
         if (packagePath.length !== 0 && packagePath.startsWith("node_modules")) {
             try {
-                const packageJson: PackageJson = require(path.join(root, packagePath, 'package.json'));
-                packages[packagePath] = packageJson;
+                packages[packagePath] = require(path.join(root, packagePath, 'package.json'));
             } catch (e) {
                 console.log(packagePath);
                 throw new Error("读取package.json时发生错误");

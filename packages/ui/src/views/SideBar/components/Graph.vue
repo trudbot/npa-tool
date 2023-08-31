@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import {Pie} from '@antv/g2plot';
 import {useDependencyData} from "../../../stores/dependencyData.ts";
-import {computed, onMounted, ref, watch} from "vue";
+import {ref} from "vue";
 import PiePlot from "./PiePlot.vue";
 import GraphModule from './GraphModule.vue';
 import {light as colors} from "../../../assets/colorSystem.ts";
@@ -176,7 +175,7 @@ function secondConfirmDepth(result) {
 
   .btn-color-mode-switch {
     display: inline-block;
-    margin: 0px;
+    margin: 0;
     position: relative;
   }
 
@@ -214,8 +213,8 @@ function secondConfirmDepth(result) {
     top: 2px;
     text-align: center;
     transition: all 0.3s ease;
-    box-shadow: 0px 0px 6px -2px #111;
-    padding: 5px 0px;
+    box-shadow: 0 0 6px -2px #111;
+    padding: 5px 0;
   }
 
   .btn-color-mode-switch > .alert {
@@ -233,7 +232,7 @@ function secondConfirmDepth(result) {
     position: absolute;
     top: 0;
     z-index: 1;
-    margin: 0px;
+    margin: 0;
   }
 
   .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner {

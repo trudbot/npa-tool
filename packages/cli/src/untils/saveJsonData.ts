@@ -1,5 +1,3 @@
-
-import path from "path";
 import fs from "fs";
 
 function saveJsonData(pth: string, data: JsonData) {
