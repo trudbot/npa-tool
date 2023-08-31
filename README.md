@@ -20,7 +20,7 @@
 - 等等。
 
 **npa-tool**是一个开源的命令行界面交互工具， 能从项目的package.json出发， 得到项目的所有包依赖关系， 并可视化展现。
-![](https://trudbot-md-img.oss-cn-shanghai.aliyuncs.com/202308301128686.png)
+![](https://trudbot-md-img.oss-cn-shanghai.aliyuncs.com/202308311413312.png)
 ## 📦Installation
 ```shell
 npm install -g npa-tool
