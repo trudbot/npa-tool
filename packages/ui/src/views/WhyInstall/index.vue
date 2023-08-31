@@ -7,13 +7,13 @@ const graphBox = ref(null);
 const width = ref(600);
 const height = ref(400);
 function loadNewSize() {
-  const container: Element = graphBox.value;
+  const container: Element = graphBox.value as unknown as Element;
   if (!container || !container.clientWidth || !container.clientHeight) return;
   width.value = container.clientWidth;
   height.value = container.clientHeight;
 }
 
-const data = shallowRef(undefined);
+const data = shallowRef(undefined) as any;
 
 const props = defineProps<{
   id: string
@@ -26,7 +26,7 @@ onMounted(() => {
   whyPackageInstalled({id: parseInt(props.id)}).then(res => {
     console.log(props.id)
     data.value = {
-      nodes: res.data.nodes.map((e, idx) => {
+      nodes: res.data.nodes.map((e) => {
         return {
           id: e.id.toString(),
           label: e.name + "@" + e.version,

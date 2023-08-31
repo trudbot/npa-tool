@@ -59,6 +59,9 @@ export const useDependencyData = defineStore('dependencies', () => {
     });
 
     const noLabelGraphData = computed(() => {
+        if (data.value === undefined) {
+            return undefined;
+        }
         return {
             nodes: data.value.nodes.map((e) => {
                 return {

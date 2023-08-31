@@ -125,7 +125,7 @@ onMounted(() => {
 
 
   // 拖动节点时重新布局
-  function refreshDragedNodePosition(e) {
+  function refreshDragedNodePosition(e:any) {
     const model = e.item.get('model');
     model.fx = e.x;
     model.fy = e.y;
@@ -137,6 +137,9 @@ onMounted(() => {
 
   graph.on('node:dragend', (e) => {
     graph.layout()
+    if (e.item === null) {
+      return null;
+    }
     e.item.get('model').fx = null;
     e.item.get('model').fy = null;
   });

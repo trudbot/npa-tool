@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import DependencyGraph from "../DependencyGraph/index.vue"
-import {computed, onMounted, ref, shallowRef, watch} from "vue";
+import {onMounted, ref, watch} from "vue";
 import {useDependencyData} from "../../stores/dependencyData.ts";
 import {useRouter} from "vue-router";
 import {useSelectedPackageData} from "../../stores/selectedPackageData.ts";
@@ -42,14 +42,14 @@ const width = ref(1000);
 const height = ref(800);
 
 function loadNewSize() {
-  const container: Element = graphBox.value;
+  const container: Element = graphBox.value as unknown as Element;
   if (!container || !container.clientWidth || !container.clientHeight) return;
   width.value = container.clientWidth;
   height.value = container.clientHeight;
 }
 
 // 两栏拖拽布局
-const drag = ref(null);
+const drag = ref();
 
 // 侧栏宽度配置
 const defaultSidebarWidth = 400;
@@ -78,7 +78,7 @@ function fold() {
 
 // 鼠标监听事件
 function bindDrop() {
-  drag.value.onmousedown = (e) => {
+  drag.value.onmousedown = () => {
     document.onmouseup = function () {
       document.onmousemove = null
       document.onmouseup = null
@@ -86,7 +86,10 @@ function bindDrop() {
     document.onmousemove = (e) => {
       move(-1 * e.movementX)
       if (sidebarWidth.value <= minSidebarWidth) {
-        document.onmouseup(undefined);
+        if(document.onmouseup === null){
+          return document.onmouseup = null
+        }
+        document.onmouseup(e);
         fold();
       }
     }

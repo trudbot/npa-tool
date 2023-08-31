@@ -33,7 +33,7 @@ function confirmDepth() {
   }
 }
 
-function secondConfirmDepth(result) {
+function secondConfirmDepth(result:any) {
   if (result) {
     graphDataStore.setDepth(selectedDepth.value);
   }

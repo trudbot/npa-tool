@@ -7,12 +7,12 @@ import {useRouter} from "vue-router";
 const defaultDepthLimit = parseInt(import.meta.env.VITE_DEPTH_LIMIT);
 const router = useRouter();
 const pattern = ref<string>("");
-const data = shallowRef([]);
+const data = shallowRef([]) as any;
 const renderData = computed(() => {
   const color = new Map<string, number>();
   let idx = 0;
-  return data.value.map((e) => {
-    let itemColor;
+  return data.value.map((e:any) => {
+    let itemColor:any;
     if (color.has(e.item.name)) {
       itemColor = color.get(e.item.name);
     } else {

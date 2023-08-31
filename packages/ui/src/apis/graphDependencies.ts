@@ -1,7 +1,7 @@
 import request from "../utils/request";
 import {AxiosResponse} from "axios";
 import {GraphData} from "./types/GraphData.ts";
-import {PackageData, PackageJson} from "./types/PackageJson.ts";
+import {PackageData} from "./types/PackageJson.ts";
 import {DirectDependencyList} from "./types/DirectDependencyList.ts";
 
 // 获得从项目根开始的、所有的包的依赖关系

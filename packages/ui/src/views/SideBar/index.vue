@@ -34,7 +34,7 @@ onMounted(() => {
   click(menuItem.findIndex(e => e.route === route.name));
 })
 // 路由绑定菜单项
-onBeforeRouteUpdate((to, from) => {
+onBeforeRouteUpdate((to) => {
   click(menuItem.findIndex(e => e.route === to.name));
 })
 

@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import {computed, ref, shallowRef} from "vue";
+import {computed} from "vue";
 import {useSelectedPackageData} from "../../../stores/selectedPackageData.ts";
 import {useRouter} from "vue-router";
-import {Folder, Link, InfoFilled, FolderOpened, Document} from "@element-plus/icons-vue";
+import {Folder, Link, InfoFilled, FolderOpened} from "@element-plus/icons-vue";
 import GraphModule from "./GraphModule.vue";
-import {whyPackageInstalled} from "../../../apis/graphDependencies.ts";
-import DependencyGraph from "../../DependencyGraph/index.vue"
 
 const selectedPackageStore = useSelectedPackageData();
 const router = useRouter();
@@ -25,12 +23,12 @@ const version = computed(() => {
   return "0.0.0";
 });
 
-const description = computed(() => {
-  if (selectedPackageStore.packageData && selectedPackageStore.packageData.description) {
-    return selectedPackageStore.packageData.description;
-  }
-  return "Description of the module";
-});
+// const description = computed(() => {
+//   if (selectedPackageStore.packageData && selectedPackageStore.packageData.description) {
+//     return selectedPackageStore.packageData.description;
+//   }
+//   return "Description of the module";
+// });
 
 const path = computed(() => {
   if (selectedPackageStore.path) {
