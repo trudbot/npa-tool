@@ -4,12 +4,12 @@
   "description": "",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build:cli": "npx tsc -p packages/cli",
     "lint:cli": "eslint packages/cli/src --ext .ts",
     "dev": "npm run -w npa-ui dev",
     "build:ui": "npm run -w npa-ui build",
-    "lint:ui": "eslint packages/ui/src"
+    "lint:ui": "eslint packages/ui/src",
+    "test": "jest"
   },
   "workspaces": [
     "packages/*"
@@ -18,8 +18,10 @@
     "npm": ">=7.24.2"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.4",
     "@typescript-eslint/eslint-plugin": "^6.2.1",
     "@typescript-eslint/parser": "^6.2.1",
-    "eslint": "^8.46.0"
+    "eslint": "^8.46.0",
+    "jest": "^29.6.4"
   }
 }
