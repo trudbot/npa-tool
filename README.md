@@ -2,7 +2,7 @@
 <h1 align="center">NPM Package Analysis Tool </h1>
 <div align="center">
 
-[![](https://img.shields.io/badge/npm-v2.1.0-red.svg)](https://www.npmjs.com/package/npa-tool) 
+[![](https://img.shields.io/badge/npm-v2.2.1-red.svg)](https://www.npmjs.com/package/npa-tool) 
 [![](https://img.shields.io/badge/github-npa_tool-greene.svg)](https://github.com/trudbot/npa-tool)
 [![](https://img.shields.io/badge/license-MIT-black.svg)](./LICENSE) 
 [![](https://img.shields.io/badge/language-typescript-blue.svg)]()
@@ -49,7 +49,21 @@ npa-cli analyze   // 当前目录必须为npm项目目录
 npa-cli analyze --json="./result.json" --depth=5  // 限制分析深度, 将结果保存到json文件中
 npa-cli analyze --depth=10 ./packages/project1    // 指定分析目录, 限制分析深度
 ```
-## ✨ Feature
+## ✨ Features
 [npa-tool](https://trudbot.cn/npatool.html)
+## 📝 Applicability
+**npm** 😊
+
+**yarn** 😊
+
+**pnpm** 😭
+
+**monorepo** 😭
+
+---
+
+**windows** 😊
+
+**linux** 💥
 ## ⌨️ Development Guide
 [开发文档](./README.DEV.md)
