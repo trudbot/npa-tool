@@ -140,6 +140,7 @@ onMounted(() => {
           :size="'large'"
           :icon="sidebarWidth === 0 ? ArrowLeft : ArrowRight"
           @click="fold"
+          aria-label="fold"
       >
       </el-button>
     </div>

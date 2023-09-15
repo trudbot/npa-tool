@@ -96,7 +96,7 @@ export const useDependencyData = defineStore('dependencies', () => {
             return [];
         }
         const res: {licenseName: string, licenseNum: number}[] = [];
-        for (let licenseName in data.value.licenses) {
+        for (const licenseName in data.value.licenses) {
             res.push({
                 licenseName: licenseName,
                 licenseNum: data.value.licenses[licenseName],
