@@ -4,6 +4,7 @@ import express from 'express'
 import chalk from "chalk";
 import figlet from 'figlet'
 import {PackageAnalyzer} from "../packageAnalyzer";
+import portfinder from "portfinder"
 
 export function createMyServer(analyzer: PackageAnalyzer) {
     const app = express();
@@ -107,12 +108,19 @@ export function createMyServer(analyzer: PackageAnalyzer) {
             console.log(e)
             res.status(500).send("Error")
         }
-    })
-
-    const server = app.listen(port, () => {
-        console.log(chalk.cyan(figlet.textSync('NPA-TOOL')));
-        console.log(`  ${chalk.green('->')}  ${chalk.gray('Local: ')}   ${chalk.blue.underline(`http://localhost:${port}`)}`);
-        console.log(`  ${chalk.red('->')}  press Ctrl+C to terminate the process`);
-        exec(`start http://localhost:${port}`);
     });
+
+    // 端口被占用时， 递增寻找可用端口
+    portfinder.setBasePort(port);
+    portfinder.getPortPromise()
+        .then(port => {
+            app.listen(port, () => {
+                console.log(chalk.cyan(figlet.textSync('NPA-TOOL')));
+                console.log(`  ${chalk.green('->')}  ${chalk.gray('Local: ')}   ${chalk.blue.underline(`http://localhost:${port}`)}`);
+                console.log(`  ${chalk.red('->')}  press Ctrl+C to terminate the process`);
+                exec(`start http://localhost:${port}`);
+            });
+        }).catch(err => {
+            console.log(err);
+        })
 }

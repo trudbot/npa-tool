@@ -13,6 +13,12 @@
     "type": "git",
     "url": "git+https://github.com/trudbot/npa-tool.git"
   },
+  "files": [
+    "lib/*",
+    "bin/*",
+    "README.md",
+    "package.json"
+  ],
   "keywords": [
     "cli",
     "npm",
@@ -49,6 +55,7 @@
     "fuse.js": "^6.6.2",
     "glob": "^10.3.3",
     "hirestime": "^7.0.3",
+    "portfinder": "^1.0.32",
     "semver": "^7.5.4"
   },
   "devDependencies": {
