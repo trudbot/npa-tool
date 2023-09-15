@@ -16,13 +16,35 @@ npa-tool使用Monorepo管理代码, 基于npm的workspaces, 所以需要保证�
 |           |-- index.ts
 |       |-- package.json
 |   |-- ui(npa-ui)     # 前端代码
+|       |-- src/
+|           |-- api       # api封装
+|           |-- router    # 路由
+|           |-- stores    # 全局状态
+|           |-- views     # 界面代码
+|           |-- assets    # 静态资源(色系、图标)
+|       |-- .env.development        # 开发环境下的环境变量
+|       |-- .env.production         # 生产环境下的环境变量
+|       |-- package.json
 |-- package.json
 ```
 
-* 安装依赖
+## How to Run
 ```shell
+git clone git@github.com:trudbot/npa-tool.git
+cd npa-tool
 npm install
-````
+npm run build:cli
+npm run build:ui
+copy the files under packages/ui/dist to packages/cli/ui
+npx npa-cli analyze <path>
+```
+**调试前端**
+
+* 打开packages/cli/src/server/index 下的跨域, 重新编译运行
+* 打开新命令行运行 `npm run dev`
+
+## More
+
 * 为单独一个子包安装新依赖
   如，
 ```shell
@@ -46,9 +68,4 @@ npm run build:cli # 编译cli中的typescript代码
 npm run dev       # 前端调试
 npm run build:ui  # 前端打包
 ```
-* 使用命令行
-> 前置条件： cli代码已经编译， 前端代码已打包并复制到cli/html下
 
-```shell
-npx npa-cli analyze
-```
