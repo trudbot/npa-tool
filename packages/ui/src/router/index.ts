@@ -1,6 +1,5 @@
 import {createRouter, createWebHashHistory} from "vue-router";
-import Module from "../views/SideBar/components/Module.vue";
-import Graph from "../views/SideBar/components/Graph.vue"
+import Home from "../views/HomePage/index.vue"
 import Global from "../views/SideBar/components/Global.vue"
 export default createRouter({
     history: createWebHashHistory(),
@@ -19,17 +18,17 @@ export default createRouter({
         {
             path: "/dependencies/:id/:depth",
             name: "Dependencies",
-            component: () => import('../views/HomePage/index.vue'),
+            component: Home,
             props: true,
             children: [
                 {
                     path: "module",
-                    component: Module,
+                    component: () => import("../views/SideBar/components/Module.vue"),
                     name: "Module"
                 },
                 {
                     path: "graph",
-                    component: Graph,
+                    component: () => import("../views/SideBar/components/Graph.vue"),
                     name: "Graph"
                 },
                 {
