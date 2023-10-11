@@ -1,5 +1,5 @@
 import {loadNpmModules} from "../src/loader/loadNpmModules";
-import {NpmResolver} from "../src/resolver/NpmResolver";
+import {NpmResolver} from "../src";
 
 function test() {
     const res = loadNpmModules('D:\\test\\test_yarn');

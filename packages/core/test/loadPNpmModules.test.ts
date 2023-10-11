@@ -1,6 +1,5 @@
 import {loadPnpmModules} from "../src/loader/loadPnpmModules";
-import {ROOT} from "../src/types/PackageJson";
-import {PnpmResolver} from "../src/resolver/PnpmResolver";
+import {PnpmResolver} from "../src";
 function test() {
     const res = loadPnpmModules('D:\\test\\test_pnpm');
     // // console.log(res[ROOT])

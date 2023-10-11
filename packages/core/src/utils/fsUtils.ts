@@ -1,4 +1,4 @@
-import fs, {PathLike} from "fs";
+import fs from "fs";
 
 export function isFileExistsInDirectory(directoryPath: string, fileName: string): boolean {
     const filePath = `${directoryPath}/${fileName}`;

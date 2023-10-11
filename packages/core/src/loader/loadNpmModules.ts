@@ -1,4 +1,4 @@
-import {DependenciesMap, PackageJson, PackagesSet, ROOT} from "../types/PackageJson";
+import {PackageJson, PackagesSet, ROOT} from "../types/PackageJson";
 import {nativePathJoin, posixDirname} from "../utils/PathUitls";
 import {npmModulesGlobRules} from "../glob-rules/common";
 import {posixGlobSync} from "../utils/PosixGlobSync";

@@ -1,4 +1,4 @@
-import {ResolverFactory} from "../src/package-manager/factory";
+import {ResolverFactory} from "../src";
 
 const factoryTest = new ResolverFactory();
 const resolver = factoryTest.getDependencyGraph('D:\\test\\test_npm', -1);
