@@ -1,6 +1,6 @@
 import {Queue} from "@datastructures-js/queue";
 
-interface Edge<T> {
+export interface Edge<T> {
     from: number;
     to: number;
     info: T;
@@ -8,7 +8,7 @@ interface Edge<T> {
 
 // Graph的模板类， 维护边集
 // 同时图的所有搜索算法都在此实现
-class Graph<E> {
+export class Graph<E> {
     edges: Array<Array<Edge<E>>>;
     private readonly invEdges: Array<Array<Edge<E>>>;
 
@@ -32,7 +32,7 @@ class Graph<E> {
     }
 
     // 这一层导出边集以及 索引->包的关系
-    exportEdges() {
+    exportEdges(): Edge<E>[] {
         return this.edges.reduce((res, e) => res.concat(e), [])
     }
 
@@ -88,4 +88,3 @@ class Graph<E> {
 
 }
 
-export {Graph}

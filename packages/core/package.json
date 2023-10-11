@@ -1,0 +1,32 @@
+{
+  "name": "npa-core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/src/index.js",
+  "types": "lib/src/index.d.ts",
+  "devDependencies": {
+    "@types/node": "^20.4.6",
+    "@types/semver": "^7.5.3",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@datastructures-js/queue": "^4.2.3",
+    "fuse.js": "^6.6.2",
+    "glob": "^10.3.3",
+    "semver": "^7.5.4",
+    "yaml": "^2.3.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trudbot/npa-tool.git"
+  },
+  "author": "trudbot",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/trudbot/npa-tool/issues"
+  },
+  "homepage": "https://github.com/trudbot/npa-tool#readme"
+}

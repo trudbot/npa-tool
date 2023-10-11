@@ -1,5 +1,5 @@
 import {PackageInfo} from "./PackageJson";
-import {DependencyType} from "./DependencyType";
+import {DependencyType} from "../enums/DependencyType";
 
 interface Edge {
     from: number;

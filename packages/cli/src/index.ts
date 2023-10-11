@@ -4,30 +4,23 @@ import {createMyServer} from "./server";
 import {PackageAnalyzer} from './packageAnalyzer'
 import {Config} from "./types/Config";
 import {parseConfig} from "./untils/configParser";
-import {readPackageJson} from "./untils/readPackageJson";
 import {saveJsonData} from "./untils/saveJsonData";
 import {measureExecutionTime} from "./untils/measureExecutionTime";
-import {PackageJson} from "./types/PackageJson";
 
 function execute(config: Config) {
-    let packages!: { [packagePath: string]: PackageJson};
     let analyzer!: PackageAnalyzer;
     if (config.depthLimit === -1) {
         warning("最大递归深度未设置， 将生成项目的所有的包依赖关系")
     }
-    measureExecutionTime(() => {
-        packages = readPackageJson(config.root)
-    }, time => success(`读取package.json完成, 共用时${time} ms`));
 
     measureExecutionTime(() => {
-        analyzer = new PackageAnalyzer(packages, config.depthLimit);
-        analyzer.buildDependencyGraph();
-    }, time => success(`建立依赖图完成, 共用时${time} ms`));
+        analyzer = new PackageAnalyzer(config.root, config.depthLimit);
+    }, time => success(`Completed reading the project package data, taking ${time} ms`));
 
     if (config.saveJson) {
         measureExecutionTime(() => {
             saveJsonData(config.jsonPath, analyzer.dependencyGraph.exportToJson());
-        }, time => success(`成功将依赖关系保存到${config.jsonPath}中`));
+        }, () => success(`成功将依赖关系保存到${config.jsonPath}中`));
     } else {
         createMyServer(analyzer);
     }

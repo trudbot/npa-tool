@@ -1,8 +1,12 @@
 import {Graph} from "./Graph";
-import {DependencyType} from "../types/DependencyType"
+import {DependencyType} from "../enums/DependencyType"
 import {PackageInfo} from "../types/PackageJson";
 import {GraphData} from "../types/GraphData";
 import Fuse from "fuse.js";
+import {JsonData} from "../types/JsonData";
+
+export const TEMP_ID = -1;
+export const DEFAULT_DEPTH = 0;
 
 // 这个类主要做的是索引维护， 即包->索引的对应关系， 建图时的工具类
 // 这里使用包的唯一标识: 路径来做key
@@ -52,10 +56,10 @@ class DependencyGraph {
             res[this.packages[i].path] = {
                 name: this.packages[i].name,
                 version: this.packages[i].version,
-                dependencies: {}
+                dependencies: []
             }
             for (let edge of edges[i]) {
-                res[this.packages[i].path].dependencies[this.packages[edge.to].name] = this.packages[edge.to].path;
+                res[this.packages[i].path].dependencies.push(this.packages[edge.to].path);
             }
         }
         return res;
