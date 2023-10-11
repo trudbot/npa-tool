@@ -1,6 +1,6 @@
 import {createRouter, createWebHashHistory} from "vue-router";
 import Home from "../views/HomePage/index.vue"
-import Global from "../views/SideBar/components/Global.vue"
+
 export default createRouter({
     history: createWebHashHistory(),
     routes: [
@@ -34,7 +34,7 @@ export default createRouter({
                 {
                     path: "global",
                     name: "Global",
-                    component: Global
+                    component: () => import("../views/SideBar/components/Global.vue")
                 }
             ]
         },

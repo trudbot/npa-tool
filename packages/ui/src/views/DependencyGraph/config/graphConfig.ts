@@ -1,5 +1,4 @@
-import { GraphOptions } from "@antv/g6-core/lib/types";
-import G6 from "@antv/g6";
+import G6, {GraphOptions} from "@antv/g6";
 
 // 提示框
 const tooltip = new G6.Tooltip({

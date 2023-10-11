@@ -1,4 +1,4 @@
-import { GraphOptions } from "@antv/g6-core/lib/types";
+import { GraphOptions } from "@antv/g6";
 
 const defaultG6Graph: GraphOptions = {
     container: "graph-container",
