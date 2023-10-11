@@ -9,13 +9,15 @@
     "dev": "npm run -w npa-ui dev",
     "build:ui": "npm run -w npa-ui build",
     "lint:ui": "eslint packages/ui/src",
+    "build:core": "npx tsc -p packages/core",
     "test": "jest"
   },
   "workspaces": [
     "packages/*"
   ],
   "engines": {
-    "npm": ">=7.24.2"
+    "node": ">=16",
+    "pnpm": ">=8"
   },
   "devDependencies": {
     "@types/jest": "^29.5.4",
