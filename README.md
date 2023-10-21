@@ -56,14 +56,14 @@ npa-cli analyze --depth=10 ./packages/project1    // 指定分析目录, 限制�
 
 **yarn** 😊
 
-**pnpm** 😭
+**pnpm** 😊
 
-**monorepo** 😭
+**monorepo** 😊
 
 ---
 
 **windows** 😊
 
-**linux** 💥
+**linux** ?
 ## ⌨️ Development Guide
 [开发文档](./README.DEV.md)
