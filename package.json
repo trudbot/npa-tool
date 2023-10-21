@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "build:cli": "pnpm  -C packages/cli build",
-    "dev:cli": "node packages/cli/bin analyze",
+    "dev:cli": "pnpm -C packages/cli cli",
     "lint:cli": "pnpm exec eslint packages/cli/src --ext .ts",
     "dev:ui": "pnpm -C packages/ui dev",
     "build:ui": "pnpm -C packages/ui build",

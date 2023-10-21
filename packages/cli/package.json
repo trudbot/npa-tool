@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "cli": "node bin/index",
+    "cli": "node bin/index analyze",
     "build": "rimraf lib && rollup -c"
   },
   "files": [
