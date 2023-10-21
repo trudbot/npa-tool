@@ -1,20 +1,25 @@
-import {ResolverFactory} from "npa-core";
-import {DependencyGraph} from "npa-core/lib/src/dependency-graph/DependencyGraph";
-import {PackageJson, PackagesSet} from "npa-core/lib/src/types/PackageJson";
-import {GraphData} from "npa-core/lib/src/types/GraphData";
+import {DependencyGraph, GraphData, PackageJson, PackagesSet, ResolverFactory} from "npa-core";
+
+
+export function AnalyzerFactory(root: string, depthLimit: number) {
+    const factory = new ResolverFactory();
+    const resolver = factory.getDependencyGraph(root, depthLimit);
+    const dependencyGraph = resolver.resolveDependencies();
+    const packages = resolver.getPackageSetOfPackageJson();
+    return new PackageAnalyzer(dependencyGraph, packages);
+}
 
 export class PackageAnalyzer {
     dependencyGraph: DependencyGraph;
-    packages: PackagesSet<PackageJson>
+    packages: PackagesSet<PackageJson>;
 
-    constructor(root: string, depthLimit: number) {
-        const factory = new ResolverFactory();
-        const resolver = factory.getDependencyGraph(root, depthLimit);
-        this.dependencyGraph = resolver.resolveDependencies();
-        this.packages = resolver.getPackageSetOfPackageJson();
+
+    constructor(dependencyGraph: DependencyGraph, packages: PackagesSet<PackageJson>) {
+        this.dependencyGraph = dependencyGraph;
+        this.packages = packages;
     }
 
-    //
+//
     getGraphData() {
         return {
             nodes: this.dependencyGraph.exportPackages(),

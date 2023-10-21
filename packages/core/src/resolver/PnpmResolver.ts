@@ -45,7 +45,8 @@ export class PnpmResolver extends DependencyResolver<PnpmPackageSourceData> {
             const dType = getDependencyMap(this.packageSet[front].packageJson);
             this.packageSet[front].allDependencies.forEach(data => {
                 if (!dType.has(data.pkgName)) {
-                    throw new Error("Dependency not matched in packageJSON");
+                    console.log('warning', `Dependency not matched in packageJSON, src: ${front}, target: ${data.pth}`)
+                    return;
                 }
                 this.dependencyGraph.addDependency(front, data.pth, (dType.get(data.pkgName) as DependencyType));
                 if (this.packageSet[data.pth].packageJson.depth === NO_ITE) {

@@ -10,20 +10,27 @@ export interface Edge<T> {
 // 同时图的所有搜索算法都在此实现
 export class Graph<E> {
     edges: Array<Array<Edge<E>>>;
-    private readonly invEdges: Array<Array<Edge<E>>>;
+    invEdges: Array<Array<Edge<E>>>;
 
     constructor(N: number) {
         this.edges = Array.from({length: N}, () => Array.from({length: 0}));
         this.invEdges = Array.from({length: N}, () => Array.from({length: 0}));
     }
 
+    indexCheck(idx: number) {
+        return idx >= 0 && idx < this.edges.length;
+    }
+
     addEdge(from: number, to: number, info: E) {
-        this.edges[from].push({
+        if (!this.indexCheck(to) || !this.indexCheck(from)) {
+            return this;
+        }
+        this.edges[from]!.push({
             from: from,
             to: to,
             info: info
         });
-        this.invEdges[to].push({
+        this.invEdges[to]!.push({
             from: to,
             to: from,
             info: info
@@ -65,15 +72,15 @@ export class Graph<E> {
             const front = queue.dequeue();
             resultNodes.push({
                 id: front,
-                depth: depth[front]
+                depth: depth[front] as number
             })
             if (depth[front] === depthLimit) {
                 continue;
             }
-            resultEdges = resultEdges.concat(edgesSource[front]);
-            for (let e of edgesSource[front]) {
+            resultEdges = resultEdges.concat(edgesSource[front]!);
+            for (let e of edgesSource[front]!) {
                 if (depth[e.to] === 0) {
-                    depth[e.to] = depth[front] + 1;
+                    depth[e.to] = depth[front]! + 1;
                     queue.push(e.to);
                 }
             }

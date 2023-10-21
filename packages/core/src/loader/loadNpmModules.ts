@@ -5,20 +5,21 @@ import {posixGlobSync} from "../utils/PosixGlobSync";
 import {globSync} from "glob";
 import {addDependency} from "../utils/packageJsonUtils";
 import {DependencyType} from "../enums/DependencyType";
+import {readJsonFile} from "../utils/fsUtils";
 
 export function loadNpmModules(
     root: string
 ): PackagesSet<PackageJson> {
     const packages: PackagesSet<PackageJson> = {};
     try {
-        packages[ROOT] = require(nativePathJoin(root, 'package.json'));
+        packages[ROOT] = readJsonFile<PackageJson>(nativePathJoin(root, 'package.json'));
         const monorepo: string[] | undefined = packages[ROOT].workspaces;
         if (monorepo !== undefined) {
             const monorepoPath = globSync(monorepo, {
                 cwd: root
             });
             monorepoPath.forEach(repo => {
-                const packageJson: PackageJson = require(nativePathJoin(root, repo, 'package.json'));
+                const packageJson: PackageJson = readJsonFile<PackageJson>(nativePathJoin(root, repo, 'package.json'));
                 packageJson.dev = true;
                 addDependency(packages[ROOT], packageJson.name, packageJson.version, DependencyType.Dependencies);
             })
@@ -35,8 +36,8 @@ export function loadNpmModules(
             cwd: root,
         });
         packagePathList.forEach(pth => {
-            packages[posixDirname(pth)] = require(nativePathJoin(root, pth));
-        });
+            packages[posixDirname(pth)] = readJsonFile<PackageJson>(nativePathJoin(root, pth));
+        })
     } catch (e) {
         console.log(`Error loading dependency package<npm/yarn>`);
         throw e;

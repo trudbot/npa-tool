@@ -1,4 +1,4 @@
-import {Graph} from "./Graph";
+import {Edge, Graph} from "./Graph";
 import {DependencyType} from "../enums/DependencyType"
 import {PackageInfo} from "../types/PackageJson";
 import {GraphData} from "../types/GraphData";
@@ -21,10 +21,10 @@ class DependencyGraph {
         this.packages = packages;
         this.graph = new Graph<DependencyType>(packages.length);
         this.index = new Map<string, number>();
-        for (let i = 0; i < packages.length; i++) {
-            this.index.set(packages[i].path, i);
-            packages[i].id = i;
-        }
+        packages.forEach((v, idx) => {
+            this.index.set(v.path, idx);
+            v.id = idx;
+        })
     }
 
     addDependency(pth1: string, pth2: string, type: DependencyType) {
@@ -37,7 +37,7 @@ class DependencyGraph {
 
     setPackageDepth(pth: string, depth: number): void {
         if (this.index.has(pth)) {
-            this.packages[this.index.get(pth) as number].depth = depth;
+            (this.packages[this.index.get(pth) as number] as PackageInfo).depth = depth;
         }
     }
 
@@ -52,14 +52,26 @@ class DependencyGraph {
     exportToJson() {
         const res: JsonData = {};
         const edges = this.graph.edges;
+        this.packages.forEach((v, idx) => {
+            res[v.path] = {
+                name: v.name,
+                version: v.version,
+                dependencies: []
+            };
+            (edges[idx] as Edge<DependencyType>[]).forEach(e => {
+                if (res[v.path] !== undefined && res[v.path]!['dependencies'] !== undefined) {
+                    res[v.path]!.dependencies.push((this.packages[e.to] as PackageInfo).path);
+                }
+            })
+        })
         for (let i = 0; i < this.packages.length; i++) {
-            res[this.packages[i].path] = {
-                name: this.packages[i].name,
-                version: this.packages[i].version,
+            res[this.packages[i]!.path] = {
+                name: this.packages[i]!.name,
+                version: this.packages[i]!.version,
                 dependencies: []
             }
-            for (let edge of edges[i]) {
-                res[this.packages[i].path].dependencies.push(this.packages[edge.to].path);
+            for (let edge of edges[i]!) {
+                res[this.packages[i]!.path]!.dependencies.push(this.packages[edge.to]!.path);
             }
         }
         return res;
@@ -70,7 +82,7 @@ class DependencyGraph {
         const {nodes, edges} = this.graph.subGraph(id, depthLimit);
         return {
             nodes: nodes.map((e) => {
-                const info: PackageInfo = {...this.packages[e.id]};
+                const info: PackageInfo = {...this.packages[e.id]} as PackageInfo;
                 info.depth = e.depth;
                 return info;
             }),
@@ -82,7 +94,7 @@ class DependencyGraph {
     // 获得某个包的直接依赖
     getDirectDependency(id: number) {
         return {
-            list: this.graph.edges[id].map(e => {
+            list: this.graph.edges[id]!.map(e => {
                 return this.packages[e.to];
             })
         }
@@ -93,7 +105,7 @@ class DependencyGraph {
         const {nodes, edges} = this.graph.findPredecessors(id);
         return {
             nodes: nodes.map((e) => {
-                const info: PackageInfo = {...this.packages[e.id]};
+                const info: PackageInfo = {...this.packages[e.id]} as PackageInfo;
                 info.depth = e.depth;
                 return info;
             }),

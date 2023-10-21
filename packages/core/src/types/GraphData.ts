@@ -6,6 +6,7 @@ interface Edge {
     to: number;
     info: DependencyType;
 }
+
 interface GraphData {
     nodes: PackageInfo[],
     edges: Edge[],
@@ -14,4 +15,4 @@ interface GraphData {
     }
 }
 
-export {Edge, GraphData}
+export {GraphData}

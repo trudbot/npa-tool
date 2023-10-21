@@ -4,17 +4,15 @@
   "description": "",
   "private": true,
   "scripts": {
-    "build:cli": "npx tsc -p packages/cli",
-    "lint:cli": "eslint packages/cli/src --ext .ts",
-    "dev": "npm run -w npa-ui dev",
-    "build:ui": "npm run -w npa-ui build",
-    "lint:ui": "eslint packages/ui/src",
-    "build:core": "npx tsc -p packages/core",
-    "test": "jest"
+    "build:cli": "pnpm  -C packages/cli build",
+    "dev:cli": "node packages/cli/bin analyze",
+    "lint:cli": "pnpm exec eslint packages/cli/src --ext .ts",
+    "dev:ui": "pnpm -C packages/ui dev",
+    "build:ui": "pnpm -C packages/ui build",
+    "lint:ui": "pnpm exec eslint packages/ui/src",
+    "build:core": "pnpm -C packages/core build",
+    "test": "pnpm exec jest"
   },
-  "workspaces": [
-    "packages/*"
-  ],
   "engines": {
     "node": ">=16",
     "pnpm": ">=8"

@@ -1,12 +1,11 @@
-import path from "path";
-import { exec } from "child_process";
+import { exec } from 'child_process';
 import express from 'express'
 import chalk from "chalk";
 import figlet from 'figlet'
-import {PackageAnalyzer} from "../packageAnalyzer";
+import {PackageAnalyzer} from '../packageAnalyzer/index.js';
 import portfinder from "portfinder"
 
-export function createMyServer(analyzer: PackageAnalyzer) {
+export function createDataServer(analyzer: PackageAnalyzer, ui: string) {
     const app = express();
     const port = 3000;
 
@@ -19,7 +18,7 @@ export function createMyServer(analyzer: PackageAnalyzer) {
     //     next();
     // });
 
-    app.use(express.static(path.join(__dirname, '../../ui')));
+    app.use(express.static(ui));
 
     app.get('/api/nodes', (req: express.Request, res: express.Response) => {
         res.json(analyzer.dependencyGraph.exportPackages());

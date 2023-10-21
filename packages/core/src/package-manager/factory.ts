@@ -21,7 +21,7 @@ export class ResolverFactory {
             }
         });
         if (pkgManager === null) {
-            console.log('warning', 'Package manager not matched to project')
+            console.log('warning', 'Package manager not matched to project');
             return new NpmResolver(loadNpmModules(root), depth);
             // throw new Error('Package manager not matched to project');
         }

@@ -2,27 +2,41 @@
   "name": "npa-core",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/src/index.js",
-  "types": "lib/src/index.d.ts",
+  "main": "./lib/index.js",
+  "type": "module",
   "devDependencies": {
+    "@rollup/plugin-alias": "^5.0.1",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^25.0.5",
+    "@rollup/plugin-json": "^6.0.1",
+    "@rollup/plugin-node-resolve": "^15.2.3",
     "@types/node": "^20.4.6",
     "@types/semver": "^7.5.3",
-    "typescript": "^5.1.6"
-  },
-  "dependencies": {
+    "rimraf": "^5.0.5",
+    "rollup": "^4.1.1",
+    "rollup-plugin-dts": "^6.1.0",
+    "rollup-plugin-esbuild": "^6.1.0",
+    "tslib": "^2.6.2",
+    "typescript": "^5.1.6",
     "@datastructures-js/queue": "^4.2.3",
     "fuse.js": "^6.6.2",
     "glob": "^10.3.3",
     "semver": "^7.5.4",
     "yaml": "^2.3.2"
   },
+  "dependencies": {
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rimraf lib && rollup -c"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/trudbot/npa-tool.git"
   },
+  "files": [
+    "lib/*"
+  ],
   "author": "trudbot",
   "license": "MIT",
   "bugs": {

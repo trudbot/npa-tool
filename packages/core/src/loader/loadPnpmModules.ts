@@ -3,10 +3,11 @@ import {nativeDirname, nativePathJoin, posixRelative, toPosixRelativePath} from 
 import {pnpmDependenciesSource, pnpmPackageDependencies, pnpmPackageDependenciesBase} from "../glob-rules/pnpm";
 import {isSymbolicLink, readPosixSymbolLinkRelativeValue} from "../utils/SymbolicLinkUtils";
 import {globSync} from "glob";
-import YAML from 'yaml'
+import YAML from 'yaml';
 import fs from "fs";
 import {addDependency} from "../utils/packageJsonUtils";
 import {DependencyType} from "../enums/DependencyType";
+import {readJsonFile} from "../utils/fsUtils";
 
 export type PnpmDependency = {
     pkgName: string;
@@ -36,20 +37,17 @@ export function loadPnpmModules(
         projectModule.forEach(project => {
             const projectAbsolutePath = nativePathJoin(root, project);
             packages[toPosixRelativePath(project)] = {
-                packageJson: require(nativePathJoin(projectAbsolutePath, 'package.json')),
+                packageJson: readJsonFile<PackageJson>(nativePathJoin(projectAbsolutePath, 'package.json')),
                 allDependencies: globSync(pnpmPackageDependencies, {
                     cwd: projectAbsolutePath
                 }).map(depend => {
                     return {
-                        pth: readPosixSymbolLinkRelativeValue(
-                            nativePathJoin(projectAbsolutePath, depend),
-                            root
-                        ),
+                        pth: readPosixSymbolLinkRelativeValue(nativePathJoin(projectAbsolutePath, depend), root),
                         pkgName: posixRelative(pnpmPackageDependenciesBase, toPosixRelativePath(depend))
                     }
                 })
             }
-        });
+        })
 
         // 将monorepo中定义的包全部加进主包的依赖
         packages[ROOT].allDependencies.push(...monorepoPath.map(pkg => {
@@ -80,7 +78,7 @@ export function loadPnpmModules(
         }).map(nativeDirname);
 
         // 遍历这些包
-        modulesDir.map((dir) => {
+        modulesDir.forEach(dir => {
             const dirAbsolutePath = nativePathJoin(root, dir);
 
             // 匹配包目录中的node_modules中的子包
@@ -104,9 +102,9 @@ export function loadPnpmModules(
                 } else {
                     cnt++;
                     pth = toPosixRelativePath(nativePathJoin(dir, module));
-                    packageJsonOfModule = require(nativePathJoin(moduleAbsolutePath, 'package.json'));
+                    packageJsonOfModule = readJsonFile(nativePathJoin(moduleAbsolutePath, 'package.json'));
                 }
-            });
+            })
             if (packageJsonOfModule === null || pth === null || cnt !== 1) {
                 throw new Error(`未读取到依赖包的安装目录, ${dir}, ${modules}`);
             } else {

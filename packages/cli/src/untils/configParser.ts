@@ -1,5 +1,5 @@
-import {Config} from "../types/Config";
-import {validateDepthOption, validateJsonOption, validateRootPath} from "./paramValidator";
+import {Config} from "../types/Config.js";
+import {validateDepthOption, validateJsonOption, validateRootPath} from "./paramValidator.js";
 import path from "path";
 
 // 将用户输入的参数和选项解析为具体的参数对象
