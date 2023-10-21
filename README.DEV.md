@@ -1,6 +1,5 @@
 # 开发npa-tool
-npa-tool使用Monorepo管理代码, 基于npm的workspaces, 所以需要保证你的npm版本在7及以上。
-
+npa-tool使用pnpm- Monorepo管理代码
 * 基本代码结构
 ```
 @npa-tool/root
@@ -33,39 +32,15 @@ npa-tool使用Monorepo管理代码, 基于npm的workspaces, 所以需要保证�
 git clone git@github.com:trudbot/npa-tool.git
 cd npa-tool
 npm install
-npm run build:cli
-npm run build:ui
+pnpm build:cli
+pnpm build:core
+pnpm run build:ui
 copy the files under packages/ui/dist to packages/cli/ui
-npx npa-cli analyze <path>
+pnpm dev:cli <path>
 ```
 **调试前端**
 
 * 打开packages/cli/src/server/index 下的跨域, 重新编译运行
-* 打开新命令行运行 `npm run dev`
+* 打开新命令行运行 `pnpm dev:ui`
 
-## More
-
-* 为单独一个子包安装新依赖
-  如，
-```shell
-npm install -w npa-ui vue
-```
-
-在根目录执行即可， 用`-w`选项指出子模块的包名(package.json中的name)
-
-> 在基于npm workspaces的Monorepo项目中， 如果想在子包中执行npm命令， 只需要在根目录直接执行， 并且加上-w指定子包名。
-> 
-> 例如要在npa-ui执行`npm run dev`进行调试， 
-> 
-> 只需要在根目录执行`npm run -w npa-ui dev`
-> 
-> 更多信息可见[官方文档](https://docs.npmjs.com/cli/v9/using-npm/workspaces)
-
-* 默认脚本
-可见[package.json #scripts](./package.json)
-```shell
-npm run build:cli # 编译cli中的typescript代码
-npm run dev       # 前端调试
-npm run build:ui  # 前端打包
-```
 
