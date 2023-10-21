@@ -8,6 +8,11 @@
     "cli": "node bin/index",
     "build": "rimraf lib && rollup -c"
   },
+  "files": [
+    "bin/*",
+    "lib/*",
+    "ui/*"
+  ],
   "bin": {
     "npa-cli": "bin/index.js"
   },

@@ -1,6 +1,1 @@
-node_modules
-src
-test
-.eslintrc
-tsconfig.json
-*.js.map
+*
