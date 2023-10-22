@@ -10,6 +10,17 @@ print_green() {
   echo ""
 }
 
+remove_directory() {
+  local dir_to_remove="$1"
+
+  # 检查目录是否存在
+  if [ -d "$dir_to_remove" ]; then
+    # 目录存在，删除它
+    rm -r "$dir_to_remove"
+    echo "目录 $dir_to_remove 已被删除."
+  fi
+}
+
 print_cyan "Installing dependencies"
 pnpm install
 print_green "Completed!"
@@ -27,6 +38,7 @@ pnpm build:ui
 print_green "Completed!"
 
 print_cyan "Copying dist of ui"
+remove_directory packages/cli/ui
 cp -r packages/ui/dist packages/cli/ui
 print_green "Completed!"
 

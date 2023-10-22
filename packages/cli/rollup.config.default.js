@@ -29,11 +29,7 @@ export default [
             {
                 file: input.replace("src/", "lib/").replace(".ts", ".js"),
                 format: "esm",
-            },
-            // {
-            //   file: input.replace("src/", "dist/").replace(".ts", ".cjs"),
-            //   format: "cjs",
-            // },
+            }
         ],
         external: ['chalk', 'figlet', 'npa-core', 'express'],
         plugins,

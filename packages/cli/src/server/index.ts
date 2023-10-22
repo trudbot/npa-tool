@@ -4,21 +4,32 @@ import chalk from "chalk";
 import figlet from 'figlet'
 import {PackageAnalyzer} from '../packageAnalyzer/index.js';
 import portfinder from "portfinder"
+import * as process from "process";
+
+enum NPA_ENV {
+    Production = 'production',
+    Development = 'development'
+}
+
+process.env.NPA_ENV = NPA_ENV.Development
 
 export function createDataServer(analyzer: PackageAnalyzer, ui: string) {
     const app = express();
     const port = 3000;
 
     // 跨域, 前端开发时调试使用
-    // app.all('*', function (req, res, next) {
-    //     res.header('Access-Control-Allow-Origin', '*');
-    //     res.header('Access-Control-Allow-Headers', 'Content-Type');
-    //     res.header('Access-Control-Allow-Methods', '*');
-    //     res.header('Content-Type', 'application/json;charset=utf-8');
-    //     next();
-    // });
 
-    app.use(express.static(ui));
+    if (process.env.NPA_ENV === NPA_ENV.Development) {
+        app.all('*', function (req, res, next) {
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Headers', 'Content-Type');
+            res.header('Access-Control-Allow-Methods', '*');
+            res.header('Content-Type', 'application/json;charset=utf-8');
+            next();
+        });
+    } else {
+        app.use(express.static(ui));
+    }
 
     app.get('/api/nodes', (req: express.Request, res: express.Response) => {
         res.json(analyzer.dependencyGraph.exportPackages());
@@ -117,7 +128,9 @@ export function createDataServer(analyzer: PackageAnalyzer, ui: string) {
                 console.log(chalk.cyan(figlet.textSync('NPA-TOOL')));
                 console.log(`  ${chalk.green('->')}  ${chalk.gray('Local: ')}   ${chalk.blue.underline(`http://localhost:${port}`)}`);
                 console.log(`  ${chalk.red('->')}  press Ctrl+C to terminate the process`);
-                exec(`start http://localhost:${port}`);
+                if (process.env.NPA_ENV === NPA_ENV.Production) {
+                    exec(`start http://localhost:${port}`);
+                }
             });
         }).catch(err => {
             console.log(err);
