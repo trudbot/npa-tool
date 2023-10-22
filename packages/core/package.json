@@ -1,10 +1,11 @@
 {
   "name": "npa-core",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "./lib/index.js",
   "type": "module",
   "devDependencies": {
+    "@datastructures-js/queue": "^4.2.3",
     "@rollup/plugin-alias": "^5.0.1",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^25.0.5",
@@ -12,23 +13,22 @@
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@types/node": "^20.4.6",
     "@types/semver": "^7.5.3",
+    "fuse.js": "^6.6.2",
+    "glob": "^10.3.3",
     "rimraf": "^5.0.5",
     "rollup": "^4.1.1",
     "rollup-plugin-dts": "^6.1.0",
     "rollup-plugin-esbuild": "^6.1.0",
+    "semver": "^7.5.4",
     "tslib": "^2.6.2",
     "typescript": "^5.1.6",
-    "@datastructures-js/queue": "^4.2.3",
-    "fuse.js": "^6.6.2",
-    "glob": "^10.3.3",
-    "semver": "^7.5.4",
+    "uglify-js": "^3.17.4",
     "yaml": "^2.3.2"
-  },
-  "dependencies": {
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rimraf lib && rollup -c"
+    "build": "rimraf lib && rollup -c",
+    "compress": "uglifyjs ./lib/index.js -c -m -o ./lib/index.js"
   },
   "repository": {
     "type": "git",

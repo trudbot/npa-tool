@@ -1,13 +1,14 @@
 {
   "name": "npa-tool",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "cli": "node bin/index analyze",
     "build": "rimraf lib  && rollup -c rollup.config.prod.js",
-    "dev": "rimraf lib  && rollup -c rollup.config.dev.js"
+    "dev": "rimraf lib  && rollup -c rollup.config.dev.js",
+    "compress": "uglifyjs ./lib/index.js -c -m -o ./lib/index.js"
   },
   "files": [
     "bin/*",

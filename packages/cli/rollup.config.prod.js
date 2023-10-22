@@ -5,7 +5,8 @@ export default configs.map(config => {
     config.plugins.push(replace({
         values: {
             'process.env.NPA_ENV': JSON.stringify('production')
-        }
+        },
+        preventAssignment: true
     }))
     return config
 })

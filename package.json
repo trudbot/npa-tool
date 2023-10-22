@@ -11,7 +11,7 @@
     "build:ui": "pnpm -C packages/ui build",
     "lint:ui": "pnpm exec eslint packages/ui/src",
     "build:core": "pnpm -C packages/core build",
-    "start": "pnpm -C packages/ui cli",
+    "start": "pnpm -C packages/cli cli",
     "test": "pnpm exec jest"
   },
   "engines": {
