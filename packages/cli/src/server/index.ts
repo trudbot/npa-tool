@@ -5,6 +5,7 @@ import figlet from 'figlet'
 import {PackageAnalyzer} from '../packageAnalyzer/index.js';
 import portfinder from "portfinder"
 import * as process from "process";
+import open from 'open';
 
 enum NPA_ENV {
     Production = 'production',
@@ -129,7 +130,7 @@ export function createDataServer(analyzer: PackageAnalyzer, ui: string) {
                 console.log(`  ${chalk.green('->')}  ${chalk.gray('Local: ')}   ${chalk.blue.underline(`http://localhost:${port}`)}`);
                 console.log(`  ${chalk.red('->')}  press Ctrl+C to terminate the process`);
                 if (process.env.NPA_ENV === NPA_ENV.Production) {
-                    exec(`start http://localhost:${port}`);
+                    open(`http://localhost:${port}`)
                 }
             });
         }).catch(err => {
