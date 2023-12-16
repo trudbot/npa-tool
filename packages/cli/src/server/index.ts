@@ -1,4 +1,3 @@
-import { exec } from 'child_process';
 import express from 'express'
 import chalk from "chalk";
 import figlet from 'figlet'
