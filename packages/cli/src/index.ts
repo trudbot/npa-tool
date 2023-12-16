@@ -1,9 +1,9 @@
 import {Config} from "./types/Config.js";
-import {AnalyzerFactory, PackageAnalyzer} from "./packageAnalyzer/index.js";
+import {AnalyzerFactory, PackageAnalyzer} from "./packageAnalyzer/analyzer";
 import {error, success, warning} from "./untils/Message.js";
 import {measureExecutionTime} from "./untils/measureExecutionTime.js";
 import {saveJsonData} from "./untils/saveJsonData.js";
-import {createDataServer} from "./server/index.js";
+import {createDataServer} from "./server/server.js";
 import {Command} from "commander";
 import {parseConfig} from "./untils/configParser.js";
 import path from "path";

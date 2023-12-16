@@ -1,7 +1,7 @@
 import express from 'express'
 import chalk from "chalk";
 import figlet from 'figlet'
-import {PackageAnalyzer} from '../packageAnalyzer/index.js';
+import {PackageAnalyzer} from '../packageAnalyzer/analyzer';
 import portfinder from "portfinder"
 import * as process from "process";
 import open from 'open';
