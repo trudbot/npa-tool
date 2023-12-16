@@ -35,7 +35,7 @@ function createProgram(): Command {
     program
         .name("npa-cli")
         .description('Visualize nodes_ Modules dependency structure')
-        .version('1.0.0');
+        .version('2.3.2');
 
     program
         .command('analyze')
