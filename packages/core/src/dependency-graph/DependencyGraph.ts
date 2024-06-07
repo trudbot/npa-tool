@@ -31,7 +31,7 @@ class DependencyGraph {
         if (this.index.has(pth1) && this.index.has(pth2)) {
             this.graph.addEdge(this.index.get(pth1) as number, this.index.get(pth2) as number, type);
         } else {
-            throw new Error("传入的路径错误！ by DependencyGraph > addDependency");
+            console.error(`传入的路径错误！ by DependencyGraph > addDependency, pth1: ${pth1}, pth2: ${pth2}`);
         }
     }
 

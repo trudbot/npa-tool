@@ -66,7 +66,7 @@ export function loadPnpmModules(
             )
         })
     } catch (e) {
-        console.log("Error loading user package<pnpm>")
+        console.error("Error loading user package<pnpm>")
         throw e;
     }
 
@@ -115,7 +115,7 @@ export function loadPnpmModules(
             }
         })
     } catch (e) {
-        console.log("Error loading dependency package<pnpm>");
+        console.error("Error loading dependency package<pnpm>");
         throw e;
     }
 

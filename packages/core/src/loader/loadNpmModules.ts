@@ -25,7 +25,7 @@ export function loadNpmModules(
             })
         }
     } catch (e) {
-        console.log(`Error loading user package<npm/yarn>`)
+        console.error(`Error loading user package<npm/yarn>`)
         throw e;
     }
 
@@ -39,7 +39,7 @@ export function loadNpmModules(
             packages[posixDirname(pth)] = readJsonFile<PackageJson>(nativePathJoin(root, pth));
         })
     } catch (e) {
-        console.log(`Error loading dependency package<npm/yarn>`);
+        console.error(`Error loading dependency package<npm/yarn>`);
         throw e;
     }
 

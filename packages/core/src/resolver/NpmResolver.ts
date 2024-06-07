@@ -77,13 +77,13 @@ export class NpmResolver extends DependencyResolver<PackageJson> {
 
             // dependencies必须匹配成功
             if (targetPath === undefined) {
-                throw new Error(`${pth}的依赖${name}: ${version}未找到`);
+                console.error(`${pth}的依赖${name}: ${version}未找到`);
             }
 
             // 当版本要求为链接形式时， 可能会产生这个异常
             // 但不影响包的依赖匹配
             if (!semver.satisfies(this.packageSet[targetPath].version, version)) {
-                console.log("版本号不匹配?", "src:", pth, "target:", targetPath, "目标版本: ", version, "匹配到的版本: ", this.packageSet[targetPath].version);
+                console.warn("版本号不匹配?", "src:", pth, "target:", targetPath, "目标版本: ", version, "匹配到的版本: ", this.packageSet[targetPath].version);
             }
             callback(targetPath, DependencyType.Dependencies)
         });
@@ -95,7 +95,7 @@ export class NpmResolver extends DependencyResolver<PackageJson> {
             iterateDependenciesMap(this.packageSet[pth].devDependencies, (name, version) => {
                 const targetPath = this.matchDependency(pth, name, version);
                 if (targetPath === undefined) {
-                    throw new Error(`${pth}的开发依赖${name}: ${version}未找到`);
+                    console.error(`${pth}的开发依赖${name}: ${version}未找到`);
                 }
                 callback(targetPath, DependencyType.DevDependencies);
             })
@@ -116,7 +116,7 @@ export class NpmResolver extends DependencyResolver<PackageJson> {
 
             // peerDependencies必须匹配成功
             if (targetPath === undefined) {
-                throw new Error(`${pth}的peer依赖${name}: ${version}未找到`);
+                console.error(`${pth}的peer依赖${name}: ${version}未找到`);
             }
         })
     }
@@ -141,7 +141,7 @@ export class NpmResolver extends DependencyResolver<PackageJson> {
         if (option.length === 1) {
             return option[0];
         }
-        throw new Error(`No dependencies matched， src: ${pth}, target: ${target + '@' + version}`);
+        console.error(`No dependencies matched， src: ${pth}, target: ${target + '@' + version}`);
     }
 
     getPackageSetOfPackageJson(): PackagesSet<PackageJson> {

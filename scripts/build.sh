@@ -37,6 +37,7 @@ print_cyan "Building Module: ui"
 pnpm build:ui
 print_green "Completed!"
 
+# 将前端打包结果复制到cli中
 print_cyan "Copying dist of ui"
 remove_directory packages/cli/ui
 cp -r packages/ui/dist packages/cli/ui
