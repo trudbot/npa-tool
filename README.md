@@ -64,6 +64,8 @@ npa-cli analyze --depth=10 ./packages/project1    // 指定分析目录, 限制�
 
 **windows** 😊
 
+**mac** 😊
+
 **linux** ?
 ## ⌨️ Development Guide
-[开发文档](./README.DEV.md)
+[开发文档](https://trudbot.github.io/npa-tool/dev/quick-start.html)
