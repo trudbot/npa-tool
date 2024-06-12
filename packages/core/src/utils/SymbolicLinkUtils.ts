@@ -1,13 +1,15 @@
 import fs from "fs";
 import path from "path";
-import {toPosixRelativePath} from "./PathUitls";
+import {toPosixRelativePath, isAbsolute, nativePathJoin, nativeDirname} from "./PathUitls";
 
 function readSymbolicLinkValue(pth: string): string {
     return fs.readlinkSync(pth);
 }
 
 export function readPosixSymbolLinkRelativeValue(pth: string, root: string): string {
-    return toPosixRelativePath(path.relative(root, readSymbolicLinkValue(pth)));
+    const realPath = readSymbolicLinkValue(pth);
+    const realAbsolutePath = isAbsolute(realPath) ? realPath : nativePathJoin(nativeDirname(pth), realPath);
+    return toPosixRelativePath(path.relative(root, realAbsolutePath));
 }
 
 export function isSymbolicLink(pth: string): boolean {

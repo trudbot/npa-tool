@@ -48,3 +48,7 @@ export function findSpecifiedDirectories(pth: string, target: string): string[] 
     })
     return res;
 }
+
+export function isAbsolute(pth: string) {
+    return path.isAbsolute(pth) || path.posix.isAbsolute(pth);
+}
