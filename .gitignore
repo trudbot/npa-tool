@@ -96,10 +96,8 @@ dist
 # https://nextjs.org/blog/next-9-1#public-directory-support
 # public
 
-# vuepress/vitepress build output
+# vuepress build output
 .vuepress/dist
-docs/.vitepress/dist
-docs/.vitepress/cache
 
 # vuepress v2.x temp and cache directory
 .temp

@@ -68,6 +68,7 @@
     "@types/node": "^20.4.6",
     "commander": "^11.0.0",
     "express": "^4.18.2",
+    "figlet": "^1.6.0",
     "glob": "^10.3.3",
     "hirestime": "^7.0.3",
     "portfinder": "^1.0.32",
