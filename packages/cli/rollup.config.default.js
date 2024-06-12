@@ -31,7 +31,7 @@ export default [
                 format: "esm",
             }
         ],
-        external: ['chalk', 'figlet', 'npa-core', 'express'],
+        external: ['chalk', 'figlet', 'npa-core', 'express', 'open'],
         plugins,
     }))
 ];
