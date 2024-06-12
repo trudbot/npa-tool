@@ -43,8 +43,6 @@ jobs:
         uses: actions/configure-pages@v4
       - name: Install dependencies
         run: pnpm install # or pnpm install / yarn install / bun install
-      - name: Build trudbot/format
-        run: pnpm -C packages/format build
       - name: Build with VitePress
         run: pnpm docs:build # or pnpm docs:build / yarn docs:build / bun run docs:build
       - name: Upload artifact
