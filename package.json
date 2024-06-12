@@ -1,6 +1,6 @@
 {
   "name": "@npa-tool/root",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "private": true,
   "scripts": {
@@ -11,8 +11,11 @@
     "build:ui": "pnpm -C packages/ui build",
     "lint:ui": "pnpm exec eslint packages/ui/src",
     "build:core": "pnpm -C packages/core build",
-    "start": "pnpm -C packages/cli cli",
-    "test": "pnpm exec jest"
+    "start": "node packages/cli/bin/index analyze",
+    "test": "pnpm exec jest",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "engines": {
     "node": ">=16",
@@ -23,6 +26,7 @@
     "@typescript-eslint/eslint-plugin": "^6.2.1",
     "@typescript-eslint/parser": "^6.2.1",
     "eslint": "^8.46.0",
-    "jest": "^29.6.4"
+    "jest": "^29.6.4",
+    "vitepress": "^1.2.3"
   }
 }
