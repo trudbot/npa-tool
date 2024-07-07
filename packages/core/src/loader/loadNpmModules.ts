@@ -13,6 +13,7 @@ export function loadNpmModules(
     const packages: PackagesSet<PackageJson> = {};
     try {
         packages[ROOT] = readJsonFile<PackageJson>(nativePathJoin(root, 'package.json'));
+        packages[ROOT].dev = true;
         const monorepo: string[] | undefined = packages[ROOT].workspaces;
         if (monorepo !== undefined) {
             const monorepoPath = globSync(monorepo, {
