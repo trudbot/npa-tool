@@ -2,7 +2,7 @@
 <h1 align="center">NPM Package Analysis Tool </h1>
 <div align="center">
 
-[![](https://img.shields.io/badge/npm-v2.2.1-red.svg)](https://www.npmjs.com/package/npa-tool) 
+[![](https://img.shields.io/npm/v/npa-tool.svg)](https://www.npmjs.com/package/npa-tool) 
 [![](https://img.shields.io/badge/github-npa_tool-greene.svg)](https://github.com/trudbot/npa-tool)
 [![](https://img.shields.io/badge/license-MIT-black.svg)](./LICENSE) 
 [![](https://img.shields.io/badge/language-typescript-blue.svg)]()
